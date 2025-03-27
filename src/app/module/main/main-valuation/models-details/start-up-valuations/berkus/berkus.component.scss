@@ -1,0 +1,56 @@
+.berkus-tab-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.berkus-tab {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #89e9b2;
+    border-radius: 20px;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'AR One Sans', sans-serif;
+}
+
+.berkus-tab:hover {
+    background-color: #408adf;
+    transform: scale(1);
+    transition: 0.3s ease-in-out;
+}
+
+.berkus-tab.active {
+    background-color: #408adf;
+    color: white;
+    font-weight: bold;
+    transform: scale(1.1);
+    transition: 0.3s ease-in-out;
+}
+
+.berkus-tab:not(.active):hover {
+    background-color: #408adf;
+    color: #fcfefc;
+    box-shadow: -2px 3px 5px 12px #4bf3e70a, -2px 2px 10px 6px #0cd18f17, 0px 0px 6px 11px #5ec8c50d;
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.05);
+    border-radius: 12px;
+}
+
+.berkus-tab {
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.berkus-tab.active {
+    color: white;
+}
+
+.berkus-tab.incomplete {
+    background-color: #e0adb2;
+    color: #6a4246;
+    border: 1px solid #f5c6cb;
+}

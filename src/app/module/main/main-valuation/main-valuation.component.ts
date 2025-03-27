@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { MODELS } from 'src/app/shared/enums/constant';
+import { BERKUS_METHOD, MODELS } from 'src/app/shared/enums/constant';
 import { isSelected } from 'src/app/shared/enums/functions';
 import { GenericModalBoxComponent } from 'src/app/shared/modal box/generic-modal-box/generic-modal-box.component';
 import { CalculationsService } from 'src/app/shared/service/calculations.service';
@@ -41,6 +41,7 @@ export class MainValuationComponent implements OnInit{
   ruleElevenData:any;
   slumpSaleData:any;
   modelArray:any=[];
+  berkusStep:any = 0;
   
   // breadcrumb property
   fcfePrev=false;
@@ -131,7 +132,31 @@ export class MainValuationComponent implements OnInit{
     fifthCtrl: ['', Validators.required],
   });
 
-  
+  loadCurrentTab(tabNum: any, type?:any){
+    this.next = tabNum;
+  }
+
+  berkusstep(bStep:any){
+    if(bStep === 0) {this.previousModelSelection(MODELS.BERKUS)}
+    else if(bStep === 6) {this.nextModelSelection(MODELS.BERKUS)}
+    else {this.berkusStep = bStep};
+  }
+
+  riskFactor(stateType:any){
+    if(stateType === 'previous') {this.previousModelSelection(MODELS.RISK_FACTOR)}
+    else {this.nextModelSelection(MODELS.RISK_FACTOR)}
+  }
+
+  scoreCard(stateType:any){
+    if(stateType === 'previous') {this.previousModelSelection(MODELS.SCORE_CARD)}
+    else {this.nextModelSelection(MODELS.SCORE_CARD)}
+  }
+
+  ventureCapital(stateType:any){
+    if(stateType === 'previous') {this.previousModelSelection(MODELS.VENTURE_CAPITAL)}
+    else {this.nextModelSelection(MODELS.VENTURE_CAPITAL)}
+  }
+
   onStepChange() {  
       this.formOneAndThreeData = {
         ...this.formOneData,
@@ -169,12 +194,12 @@ export class MainValuationComponent implements OnInit{
   }
 
   async previous(event:any){
-    // this.stepper.previous();
     const currentStep:any = localStorage.getItem('step')
-    // const currentStep:any = await this.fetchProcessActiveStage(localStorage.getItem('processStateId'));
     this.step = parseInt(currentStep) - 1;
+    if(!this.modelArray?.filter((model: string) => ![MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL].includes(model)).length && this.step === 4) {
+      this.step = this.step - 1;
+    }
     localStorage.setItem('step',`${this.step}`);
-    // await this.updateProcessActiveStage(localStorage.getItem('processStateId'),this.step);
     this.calculationService.checkStepStatus.next({stepStatus:false,step:this.step,prev:true})
     if(this.step === 3){
       this.previousModelSelection(this.formOneData,true)
@@ -268,36 +293,56 @@ export class MainValuationComponent implements OnInit{
     }
 
     const currentModel = storeModelArray[storeModelArray?.indexOf(data)+1];
+    this.berkusStep = 0;
       switch (currentModel) {
-        case 'FCFE':
+        case MODELS.FCFE:
           this.next = 1;
           break;
-        case 'FCFF':
+        case MODELS.FCFF:
           this.next = 2;
           break;
-        case 'Relative_Valuation':
+        case MODELS.RELATIVE_VALUATION:
           this.next = 3;
           break;
-        case 'Excess_Earnings':
+        case MODELS.EXCESS_EARNINGS:
           this.next = 4;
           break;
-        case 'CTM':
+        case MODELS.COMPARABLE_INDUSTRIES:
           this.next = 5;
           break;
-        case 'NAV':
+        case MODELS.NAV:
           this.next = 6;
           break;
-        case 'ruleElevenUa':
+        case MODELS.RULE_ELEVEN_UA:
           this.next = 7;
           break;
-        case 'slumpSale':
+        case MODELS.SLUMP_SALE:
           this.next = 8;
+          break;
+        case MODELS.BERKUS:
+          this.next = 9;
+          this.berkusStep = 1;
+          break;
+        case MODELS.RISK_FACTOR:
+          this.next = 10;
+          break;
+        case MODELS.SCORE_CARD:
+          this.next = 11;
+          break;
+        case MODELS.VENTURE_CAPITAL:
+          this.next = 12;
           break;
         default:
           // this.stepper.next(); 
           const currentStep:any = localStorage.getItem('step')
           // const currentStep:any = await this.fetchProcessActiveStage(localStorage.getItem('processStateId'));
           this.step = parseInt(currentStep) + 1;
+          const excludeModels = [ MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL ];
+          if(!storeModelArray.filter((model:any) => !excludeModels.includes(model)).length){
+            this.step = this.step + 1;
+            this.onStepChange()
+            this.transferStepperthree= {formOneAndThreeData:this.formOneAndThreeData ? this.formOneAndThreeData :  this.formFiveData?.formOneAndThreeData,formFourData:data,formTwoData:this.formTwoData};
+          }
           localStorage.setItem('step',`${this.step}`)
           // await this.updateProcessActiveStage(localStorage.getItem('processStateId'),this.step);
           this.calculationService.checkStepStatus.next({stepStatus:false,step:this.step})
@@ -321,38 +366,51 @@ export class MainValuationComponent implements OnInit{
         currentModel = '';
       }
     }
-  
      switch (currentModel) {
-       case 'FCFE':
+       case MODELS.FCFE:
          this.next = 1;
          break;
-       case 'FCFF':
+       case MODELS.FCFF:
          this.next = 2;
          break;
-       case 'Relative_Valuation':
+       case MODELS.RELATIVE_VALUATION:
          this.next = 3;
          break;
-       case 'Excess_Earnings':
+       case MODELS.EXCESS_EARNINGS:
          this.next = 4;
          break;
-       case 'CTM':
+       case MODELS.COMPARABLE_INDUSTRIES:
          this.next = 5;
          break;
-       case 'NAV':
+       case MODELS.NAV:
          this.next = 6;
          break;
-       case 'ruleElevenUa':
+       case MODELS.RULE_ELEVEN_UA:
          this.next = 7;
          break;
-       case 'slumpSale':
+       case MODELS.SLUMP_SALE:
          this.next = 8;
+         break;
+       case MODELS.BERKUS:
+         this.next = 9;
+         this.berkusStep = 5;
+         break;
+       case MODELS.RISK_FACTOR:
+         this.next = 10;
+         break;
+       case MODELS.SCORE_CARD:
+         this.next = 11;
+         break;
+       case MODELS.VENTURE_CAPITAL:
+         this.next = 12;
          break;
        default:
         // this.stepper.previous(); 
         const currentStep:any = localStorage.getItem('step')
         // const currentStep:any = await this.fetchProcessActiveStage(localStorage.getItem('processStateId'));
         this.step = parseInt(currentStep) - 1;
-        if(storeModelArray.length && this.formOneData?.issuanceOfShares && storeModelArray.includes(MODELS.RULE_ELEVEN_UA)){
+        const excludeModels = [ MODELS.BERKUS, MODELS.RISK_FACTOR,MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL ];
+        if(((storeModelArray.length && this.formOneData?.issuanceOfShares && storeModelArray.includes(MODELS.RULE_ELEVEN_UA)) || (!storeModelArray.filter((model:any) => !excludeModels.includes(model)).length))){
           this.step = this.step - 1;
         }
         localStorage.setItem('step',`${this.step}`)
@@ -461,6 +519,12 @@ export class MainValuationComponent implements OnInit{
           this.onStepChange();
           this.formOneAndThreeData = {...updatedPayload};
           this.formFiveData = {formOneAndThreeData : updatedPayload,formFourData:processStateDetails.fourthStageInput,formFiveData:processStateDetails?.fifthStageInput?.totalWeightageModel};
+          
+          const excludedModels = [MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL];
+          const modelArray = processStateDetails?.firstStageInput?.model?.filter((model: string) => !excludedModels.includes(model));
+          if(!modelArray.length && processStateDetails?.firstStageInput?.model?.length){
+            this.formFiveData = {formOneAndThreeData : processStateDetails.firstStageInput,formFourData:processStateDetails.fourthStageInput,formFiveData:processStateDetails?.fifthStageInput?.totalWeightageModel};
+          }
         }
         if(processStateDetails?.fifthStageInput || processStateDetails?.sixthStageInput){
           this.formSixData = {...this.formFiveData,formFiveData : processStateDetails.fifthStageInput?.totalWeightageModel,formSixData:processStateDetails?.sixthStageInput}

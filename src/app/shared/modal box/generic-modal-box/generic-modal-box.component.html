@@ -572,6 +572,114 @@
       </div>
     </div>
 
+  <!-- Start up valuations -->
+    <div class="ruleElevenUaApproach">
+      <div class="pos-absolute-startUpValuation">
+        <span>{{appValues.VALUATION_METHOD.startUpValuationApproach.label}}</span>
+      </div>
+      <div class="row fcff-hover" >
+        <div class="col-xl-5 n-models-fcff">
+          <div class="form-check">
+            <input class="form-check-input" [checked]="berkusSelectedModel" (click)="createModelControl('berkus','startUpValuationApproach')" type="radio" name="flexRadioDefault9" id="flexRadioDefault9">
+            <label class="form-check-label" for="flexRadioDefault9">
+              {{appValues.VALUATION_METHOD.startUpValuationApproach.berkus.name}}
+            </label>
+            <p class="rm-pad"> 
+              <span class="tool-class">
+                <svg matTooltipClass='model-tooltip' [matTooltip]="helperText.berkusModelLabel" matTooltipPosition="right"  xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 512">
+                  <path d="M248,64C146.39,64,64,146.39,64,248s82.39,184,184,184,184-82.39,184-184S349.61,64,248,64Z" class="path-svg" style="fill:none;stroke:#3355dd;stroke-miterlimit:10;stroke-width:32px;" 
+                  fill="#ff0000"></path>
+                  <polyline points="220 220 252 220 252 336" class="model-polyline" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px;">
+                  </polyline><line x1="208" y1="340" x2="296" y2="340" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px;">
+                </line><path d="M248,130a26,26,0,1,0,26,26A26,26,0,0,0,248,130Z" fill="#ff0000"></path></svg>
+              </span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+      <div class="row fcff-hover" >
+        <div class="col-xl-5 n-models-fcff">
+          <div class="form-check">
+            <input class="form-check-input" [checked]="riskFactorSelectedModel" (click)="createModelControl('riskFactor','startUpValuationApproach')" type="radio" name="flexRadioDefault10" id="flexRadioDefault10">
+            <label class="form-check-label" for="flexRadioDefault10">
+              {{appValues.VALUATION_METHOD.startUpValuationApproach.riskFactor.name}}
+            </label>
+            <p class="rm-pad"> 
+              <span class="tool-class">
+                <svg matTooltipClass='model-tooltip' [matTooltip]="helperText.riskFactorModelLabel" matTooltipPosition="right"  xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 512">
+                  <path d="M248,64C146.39,64,64,146.39,64,248s82.39,184,184,184,184-82.39,184-184S349.61,64,248,64Z" class="path-svg" style="fill:none;stroke:#3355dd;stroke-miterlimit:10;stroke-width:32px;" 
+                  fill="#ff0000"></path>
+                  <polyline points="220 220 252 220 252 336" class="model-polyline" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px;">
+                  </polyline><line x1="208" y1="340" x2="296" y2="340" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px;">
+                </line><path d="M248,130a26,26,0,1,0,26,26A26,26,0,0,0,248,130Z" fill="#ff0000"></path></svg>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row fcff-hover" >
+        <div class="col-xl-5 n-models-fcff">
+          <div class="form-check">
+            <input class="form-check-input" [checked]="scoreCardSelectedModel" (click)="createModelControl('scoreCard','startUpValuationApproach')" type="radio" name="flexRadioDefault11" id="flexRadioDefault11">
+            <label class="form-check-label" for="flexRadioDefault11">
+              {{appValues.VALUATION_METHOD.startUpValuationApproach.scoreCard.name}}
+            </label>
+            <p class="rm-pad"> 
+              <span class="tool-class">
+                <svg matTooltipClass='model-tooltip' [matTooltip]="helperText.scoreCardModelLabel" matTooltipPosition="right"  xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 512">
+                  <path d="M248,64C146.39,64,64,146.39,64,248s82.39,184,184,184,184-82.39,184-184S349.61,64,248,64Z" class="path-svg" style="fill:none;stroke:#3355dd;stroke-miterlimit:10;stroke-width:32px;" 
+                  fill="#ff0000"></path>
+                  <polyline points="220 220 252 220 252 336" class="model-polyline" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px;">
+                  </polyline><line x1="208" y1="340" x2="296" y2="340" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px;">
+                </line><path d="M248,130a26,26,0,1,0,26,26A26,26,0,0,0,248,130Z" fill="#ff0000"></path></svg>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row fcff-hover" >
+        <div class="col-xl-5 n-models-fcff">
+          <div class="form-check">
+            <input class="form-check-input" [checked]="ventureCapitalSelectedModel" (click)="createModelControl('ventureCapital','startUpValuationApproach')" type="radio" name="flexRadioDefault12" id="flexRadioDefault12">
+            <label class="form-check-label" for="flexRadioDefault12">
+              {{appValues.VALUATION_METHOD.startUpValuationApproach.ventureCapital.name}}
+            </label>
+            <p class="rm-pad"> 
+              <span class="tool-class">
+                <svg matTooltipClass='model-tooltip' [matTooltip]="helperText.ventureCapitalModelLabel" matTooltipPosition="right"  xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 512">
+                  <path d="M248,64C146.39,64,64,146.39,64,248s82.39,184,184,184,184-82.39,184-184S349.61,64,248,64Z" class="path-svg" style="fill:none;stroke:#3355dd;stroke-miterlimit:10;stroke-width:32px;" 
+                  fill="#ff0000"></path>
+                  <polyline points="220 220 252 220 252 336" class="model-polyline" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px;">
+                  </polyline><line x1="208" y1="340" x2="296" y2="340" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px;">
+                </line><path d="M248,130a26,26,0,1,0,26,26A26,26,0,0,0,248,130Z" fill="#ff0000"></path></svg>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row fcff-hover" >
+        <div class="col-xl-5 n-models-fcff">
+          <div class="form-check">
+            <input class="form-check-input" [checked]="costToDuplicateSelectedModel" (click)="createModelControl('costToDuplicate','startUpValuationApproach')" type="radio" name="flexRadioDefault13" id="flexRadioDefault13">
+            <label class="form-check-label" for="flexRadioDefault13">
+              {{appValues.VALUATION_METHOD.startUpValuationApproach.costToDuplicate.name}}
+            </label>
+            <p class="rm-pad"> 
+              <span class="tool-class">
+                <svg matTooltipClass='model-tooltip' [matTooltip]="helperText.costToDuplicateModelLabel" matTooltipPosition="right"  xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 512">
+                  <path d="M248,64C146.39,64,64,146.39,64,248s82.39,184,184,184,184-82.39,184-184S349.61,64,248,64Z" class="path-svg" style="fill:none;stroke:#3355dd;stroke-miterlimit:10;stroke-width:32px;" 
+                  fill="#ff0000"></path>
+                  <polyline points="220 220 252 220 252 336" class="model-polyline" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px;">
+                  </polyline><line x1="208" y1="340" x2="296" y2="340" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px;">
+                </line><path d="M248,130a26,26,0,1,0,26,26A26,26,0,0,0,248,130Z" fill="#ff0000"></path></svg>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <!-- Slump Sale -->
   <!-- <div class="ruleElevenUaApproach">
     <div class="pos-absolute-r11ua">
@@ -601,21 +709,23 @@
     <!-- template download and upload -->
     <div class="row" style="margin-top: 3%;padding-left: 1%;">
       <div class="col-xl-9">
-        <span class="download-temp"><a [href]="downloadTemplate" target="_blank">Download Template</a></span>
-        <input
-          type="file"
-          hidden
-          #fileInput
-          accept="image/png, image/jpeg, .pdf, .xlsx"
-          (change)="onFileSelected($event)"
-        />
-        <button type="button" [disabled]="modSelLoader" class="btn btn-primary upload-bt" (click)="fileInput.click()">
-          <span class="pos-upload-absolute">
-            <mat-icon>cloud_upload</mat-icon>
-          </span>
-          Upload file</button>
-        <span class="file-name" *ngIf="fileName">{{fileName}}</span>
-        <span *ngIf="!fileUploadStatus" class="error-text">Please upload file</span>
+        <ng-container *ngIf="disableTemplateButton()">
+          <span class="download-temp"><a [href]="downloadTemplate" target="_blank">Download Template</a></span>
+          <input
+            type="file"
+            hidden
+            #fileInput
+            accept="image/png, image/jpeg, .pdf, .xlsx"
+            (change)="onFileSelected($event)"
+          />
+          <button type="button" [disabled]="modSelLoader" class="btn btn-primary upload-bt" (click)="fileInput.click()">
+            <span class="pos-upload-absolute">
+              <mat-icon>cloud_upload</mat-icon>
+            </span>
+            Upload file</button>
+          <span class="file-name" *ngIf="fileName">{{fileName}}</span>
+          <span *ngIf="!fileUploadStatus" class="error-text">Please upload file</span>
+        </ng-container>
       </div>
       <div class="col-xl-3" style="text-align: right;padding-right: 2%;">
         <button type="button" [disabled]="modSelLoader" class="btn btn-success submit-bt" (click)="submitModelValuation()">

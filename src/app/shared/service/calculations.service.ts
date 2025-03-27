@@ -20,6 +20,8 @@ export class CalculationsService {
   issuanceOfSharesDetector = new Subject<{ status: boolean }>();
   modelWeightageData: BehaviorSubject<any> = new BehaviorSubject(0);
   userName: Subject<any> = new Subject();
+  hideModelWeightage: BehaviorSubject<any> = new BehaviorSubject(false);
+  hideReviewForm: BehaviorSubject<any> = new BehaviorSubject({status:true});
   
   getCostOfEquity(payload:any){
     return this.http.post(`${HOST}coe/adjcoe`, payload)

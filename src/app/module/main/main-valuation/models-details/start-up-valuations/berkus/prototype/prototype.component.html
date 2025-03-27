@@ -1,0 +1,132 @@
+<div *ngIf="controls.BERKUS.type === 'berkus'" class="pt-2">
+    <form [formGroup]="prototypeForm" class="outer-wrapper" *ngIf="prototypeRegConfig.length">
+        <div class="row">
+          <ng-container *ngFor="let config of prototypeRegConfig;index as i">
+            <ng-container *ngIf="config.type === 'header'">
+                <div class="col-xl-12" style="padding-bottom: 1%;">
+                    <div [class]='config.class'>
+                        <h3>
+                            <span style="padding-left: 2%;">{{config.label}}</span>
+                        </h3>
+                        <div class='c-decorated-header_link-view-more'></div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!config.type">
+                  <div class="col-xl-12" style="padding-top: 0%;">
+                    <div class="question">
+                        <div class="question-index">{{i}}</div>
+                        <div class="question-text" >{{config.question}} </div>
+                        <div class="question-info rm-pad" >
+                            <span class="tool-class">
+                              <svg [matTooltip]="config.tooltip" matTooltipPosition="right" matTooltipClass='model-tooltip' xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 512">
+                                <path d="M248,64C146.39,64,64,146.39,64,248s82.39,184,184,184,184-82.39,184-184S349.61,64,248,64Z" class="path-svg" style="fill:none;stroke:#3355dd;stroke-miterlimit:10;stroke-width:32px;" 
+                                fill="#ff0000"></path>
+                                <polyline points="220 220 252 220 252 336" class="model-polyline" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px;">
+                                </polyline><line x1="208" y1="340" x2="296" y2="340" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px;">
+                              </line><path d="M248,130a26,26,0,1,0,26,26A26,26,0,0,0,248,130Z" fill="#ff0000"></path></svg>
+                            </span>
+                        </div>
+                      </div>
+                  </div>
+                </ng-container>
+              <div class = 'col-xl-12 col-md-12 field' *ngIf="!config.type && config.controlName">
+                    <div class="row">
+                      <div class="col-xl-6 col-md-6">
+                        <div class="material-textfield-si">
+                            <mat-form-field appearance="fill" class="control-form-field" style="width: 100%;">
+                                <mat-label>
+                                  <div class="label-container">
+                                    {{ config.label }}*
+                                    <!-- <span class="company-info-span" >
+                                      <svg matTooltipClass='form-one-tooltip' [matTooltip]="config.tooltip" matTooltipPosition="right" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 512">
+                                        <path d="M248,64C146.39,64,64,146.39,64,248s82.39,184,184,184,184-82.39,184-184S349.61,64,248,64Z" class="path-svg" style="fill:none;stroke:#3355dd;stroke-miterlimit:10;stroke-width:32px;" 
+                                          fill="#ff0000"></path>
+                                        <polyline points="220 220 252 220 252 336" class="model-polyline" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px;">
+                                        </polyline>
+                                        <line x1="208" y1="340" x2="296" y2="340" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px;">
+                                        </line>
+                                        <path d="M248,130a26,26,0,1,0,26,26A26,26,0,0,0,248,130Z" fill="#ff0000"></path>
+                                      </svg>
+                                    </span> -->
+                                  </div>
+                                </mat-label>
+                                <span class="company-list-rmve" *ngIf="prototypeForm.controls[config.controlName]?.value" style="right:7%;">
+                                <mat-icon class="company-list-rmve-icon" (click)="clearInput(config.controlName)">close</mat-icon>
+                                </span>
+                                
+                                <mat-select [formControlName]="config.controlName" class="new-inp company-list-inp nature-of-instrument" [placeholder]="config.placeholder" (selectionChange)="onSelectorChange(config.controlName, config.controlNameDoa, config.degreeOfAchievement)">
+                                <mat-option *ngFor="let data of config.options" class="auto-class" [value]="data.value">
+                                    {{ data.name }}
+                                </mat-option>
+                                </mat-select>
+                                <mat-error class="company-list-error" *ngIf="prototypeForm.controls[config.controlName].touched && prototypeForm.controls[config.controlName].errors">
+                                  <span *ngIf="hasError(config.controlName,'required',prototypeForm)" class="error-text" style="padding-left: 0%;">Please select {{ config.label }}</span>
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                      </div>
+                      <div class="col-xl-6 col-md-6">
+                        <ng-container *ngFor="let doa of config.degreeOfAchievement">
+                            <ng-container *ngIf="doa?.key === prototypeForm.controls[config.controlName].value">
+                                <div class="material-textfield-si" *ngIf="doa.percentage?.length">
+                                    <mat-form-field appearance="fill" class="control-form-field" style="width: 100%;">
+                                        <mat-label>
+                                          <div class="label-container">
+                                            {{ config.labelDoa }}*
+                                          </div>
+                                        </mat-label>
+                                        <span class="company-list-rmve" *ngIf="prototypeForm.controls[config.controlNameDoa]?.value" style="right:7%;">
+                                        <mat-icon class="company-list-rmve-icon" (click)="clearInput(config.controlNameDoa)">close</mat-icon>
+                                        </span>
+                                        
+                                        <mat-select [formControlName]="config.controlNameDoa" class="new-inp company-list-inp nature-of-instrument" [placeholder]="config.placeholder">
+                                        <mat-option *ngFor="let data of doa.percentage" class="auto-class" [value]="data.value">
+                                            {{ data.percent }}
+                                        </mat-option>
+                                        </mat-select>
+                                        <mat-error class="company-list-error" *ngIf="prototypeForm.controls[config.controlNameDoa].touched && prototypeForm.controls[config.controlNameDoa].errors">
+                                          <span *ngIf="hasError(config.controlNameDoa,'required',prototypeForm)" >Please select {{ config.label }}</span>
+                                      </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="material-textfield-si" *ngIf="!doa?.percentage?.length">
+                                    <mat-form-field appearance="fill" class="control-form-field" style="width: 100%;">
+                                        <input type="number" matInput [formControlName]="config.controlNameDoa" class="company-list-inp" [placeholder]="config.placeholder">                        
+                                          <span class="company-list-rmve" *ngIf="prototypeForm.controls[config.controlNameDoa]?.value" style="right:4%;">
+                                            <mat-icon class="company-list-rmve-icon" (click)="clearInput(config.controlNameDoa)">close</mat-icon>
+                                          </span>
+                                        <mat-label>
+                                          <div class="label-container">
+                                            {{ config.labelDoa }}*
+                                          </div>
+                                        </mat-label>
+                                        <mat-error class="company-list-error" *ngIf="prototypeForm.controls[config.controlNameDoa].touched && prototypeForm.controls[config.controlNameDoa].errors">
+                                          <span *ngIf="hasError(config.controlNameDoa,'required',prototypeForm)">
+                                            Please enter {{ config.labelDoa }} value.
+                                          </span>
+                                        </mat-error>
+                                      </mat-form-field>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <br>
+              </div>
+          </ng-container>
+
+            <div class="col-md-12 btn-prop">
+              <button (click)="previous()" mat-raised-button class="button-back-mat">
+                <span class="button-back"><mat-icon>send</mat-icon></span>
+                  Back
+              </button>
+
+          <button (click)="submit()" [disabled]="prototypeForm.invalid" [ngClass]="prototypeForm.invalid ? 'button-save-mat-disable' :'button-save-mat'" mat-raised-button>
+              Next
+              <span class="button-save"><mat-icon>send</mat-icon></span>
+          </button>
+      </div>
+        </div>
+      </form>  
+</div>

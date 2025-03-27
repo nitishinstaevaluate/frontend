@@ -20,7 +20,7 @@
 <!-- valuation results ends -->
 
 <!-- modal weightage starts -->
-<div *ngIf="transferStepperthree?.formOneAndThreeData?.model.length > 1">
+<div *ngIf="showWeightageSection()">
     <!-- <h4 class="card-header" >Model Weightage</h4> -->
     <div class='c-decorated-header'>
         <h3><span style="padding-left: 2%;color: #868686;">Model Weightage</span></h3>
@@ -245,7 +245,7 @@
 <!-- modal weightage ends -->
 
 <!-- Model Weigtage Result starts -->
-<div *ngIf="checkModelWeightageData() && data && transferStepperthree?.formOneAndThreeData?.model.length > 1" style="padding-top: 2%;">
+<div *ngIf="checkModelWeightageData() && data && showWeightageSection()" style="padding-top: 2%;">
 <!-- <div *ngIf="data" style="padding-top: 2%;"> -->
     <!-- <h4 class="card-header" >Model Weightage Result</h4> -->
     <div class='c-decorated-header-model-weightage-table'>

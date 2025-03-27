@@ -1,0 +1,16 @@
+<div class="berkus-tab-container">
+    <div *ngFor="let tab of componentConfig" class="berkus-tab"
+    [ngClass]="{
+        'active': (berkusComponentStep || 1) === tab.step,
+           'incomplete': !isComplete(tab.stateKey)
+         }"
+         (click)="loadCurrentTab(tab.step)">
+      {{ tab.label }}
+    </div>
+</div>
+
+<app-sound-idea (berkusStep)="berkusStepHandler($event)" [hidden]="(berkusComponentStep || 1) !== 1"></app-sound-idea>
+<app-prototype (berkusStep)="berkusStepHandler($event)" [hidden]="berkusComponentStep !== 2"></app-prototype>
+<app-management (berkusStep)="berkusStepHandler($event)" [hidden]="berkusComponentStep !== 3"></app-management>
+<app-strategic-relationship (berkusStep)="berkusStepHandler($event)" [hidden]="berkusComponentStep !== 4"></app-strategic-relationship>
+<app-product-rollout (berkusStep)="berkusStepHandler($event)" [hidden]="berkusComponentStep !== 5"></app-product-rollout> 

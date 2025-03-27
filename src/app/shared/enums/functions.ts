@@ -143,3 +143,20 @@ export function getAdjustedTimestamp(date:any): any {
   }
   return null;
 }
+
+export const interpreter = (value:any) => {
+  switch(true){
+      case 0 < value && value <= 20:
+          return 'Very Weak';
+      case 20 < value && value <= 40:
+          return 'Weak';
+      case 40 < value && value <= 60:
+          return 'Moderate';
+      case 60 < value && value <= 80:
+          return 'Strong';
+      case 80 < value && value <= 100:
+          return 'Very Strong';
+      default:
+          return '';
+  }
+}

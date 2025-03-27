@@ -1,0 +1,82 @@
+<div *ngIf="controls.VENTURE_CAPITAL.type === 'ventureCapital'" class="pt-2">
+    <form [formGroup]="ventureCapitalForm" class="outer-wrapper" *ngIf="ventureCapitalRegConfig.length">
+        <div class="row">
+            <div class="col-xl-12 col-md-12 field">
+                <div class="row">
+                    <ng-container *ngFor="let config of ventureCapitalRegConfig;index as i">
+                        <ng-container *ngIf="config.tagType === 'header'">
+                            <div class="col-xl-12" style="padding-bottom: 1%;">
+                                <div [class]='config.class'>
+                                    <h3>
+                                        <span>{{config.label}}</span>
+                                    </h3>
+                                    <div class='c-decorated-header_link-view-more'></div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container [ngSwitch]="config.tagType">
+                            <ng-container *ngSwitchCase="'input'">
+                                <div class="col-xl-4 col-md-4" *ngIf="validateControls(config)">
+                                    <div class="material-textfield-vc">
+                                        <mat-form-field appearance="fill" class="control-form-field" style="width: 100%;">
+                                            <input [type]="config.type" matInput [formControlName]="config.controlName" class="company-list-inp" [placeholder]="config.inputPlaceholder">                        
+                                            <span class="company-list-rmve" *ngIf="ventureCapitalForm.controls[config.controlName]?.value" style="right:4%;">
+                                                <mat-icon class="company-list-rmve-icon" (click)="clearInput(config.controlName)">close</mat-icon>
+                                            </span>
+                                            <mat-label>
+                                            <div class="label-container">
+                                                {{ config.label }}*
+                                            </div>
+                                            </mat-label>
+                                            <mat-error class="company-list-error" *ngIf="ventureCapitalForm.controls[config.controlName].touched && ventureCapitalForm.controls[config.controlName].errors">
+                                            <span *ngIf="hasError(config.controlName,'required',ventureCapitalForm)">
+                                                {{ config.error }}.
+                                            </span>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'select'">
+                                <div class="col-xl-4 col-md-4" *ngIf="validateControls(config)">
+                                <div class="material-textfield-vc">
+                                    <mat-form-field appearance="fill" class="control-form-field" style="width: 100%;">
+                                        <mat-label>
+                                            <div class="label-container">
+                                            {{ config.label }}*
+                                            </div>
+                                        </mat-label>
+                                        <span class="company-list-rmve" *ngIf="ventureCapitalForm.controls[config.controlName]?.value" style="right:9%;">
+                                        <mat-icon class="company-list-rmve-icon" (click)="clearInput(config.controlName)">close</mat-icon>
+                                        </span>
+                                        
+                                        <mat-select [formControlName]="config.controlName" class="new-inp company-list-inp nature-of-instrument vc-cross vc-input" [placeholder]="config.inputPlaceholder" (selectionChange)="onSelectorChange(config.controlName)">
+                                        <mat-option *ngFor="let data of config.options" class="auto-class" [value]="data.value">
+                                            {{ data.name }}
+                                        </mat-option>
+                                        </mat-select>
+                                        <mat-error class="company-list-error" *ngIf="ventureCapitalForm.controls[config.controlName].touched && ventureCapitalForm.controls[config.controlName].errors">
+                                            <span *ngIf="hasError(config.controlName,'required',ventureCapitalForm)" class="error-text" style="padding-left: 0%;">{{ config.error }}</span>
+                                        </mat-error>
+                                    </mat-form-field>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-md-12 btn-prop">
+              <button (click)="previous()" mat-raised-button class="button-back-mat">
+                <span class="button-back"><mat-icon>send</mat-icon></span>
+                  Back
+              </button>
+
+          <button (click)="submit()" [disabled]="ventureCapitalForm.invalid" [ngClass]="ventureCapitalForm.invalid ? 'button-save-mat-disable' :'button-save-mat'" mat-raised-button>
+              Next
+              <span class="button-save"><mat-icon>send</mat-icon></span>
+          </button>
+      </div>
+        </div>
+      </form>  
+</div>

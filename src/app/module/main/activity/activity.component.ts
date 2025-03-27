@@ -166,83 +166,78 @@ export class ActivityComponent {
     return;
   }
 
-  getValuation(modelArray:string,processData:any){
-    if(processData.fourthStageInput || processData.fifthStageInput){
-      if(modelArray.length === 1 && (modelArray.includes(MODELS.FCFE) || modelArray.includes(MODELS.FCFF) || modelArray.includes(MODELS.EXCESS_EARNINGS))){
-        let dcfApproachValuation:any = [];
-        const valuation = processData?.fourthStageInput?.appData?.valuationResult;
-        if(valuation?.length){
-         valuation.map((indValuation:any)=>{
-          if(indValuation.model === MODELS.FCFE || indValuation.model === MODELS.FCFF || indValuation.model === MODELS.EXCESS_EARNINGS){
-            dcfApproachValuation = indValuation.valuationData;
+  getValuation(modelArray:any,processData:any){
+      const excludedModels = [MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL];
+
+      modelArray = (modelArray || []).filter((model: string) => !excludedModels.includes(model));
+
+      const getFormattedValue = (currency: string, value: any) => 
+        `${currency} ${formatNumber(value || '-')}`;
+
+      const findModelData = (valuationResult: any[], models: string[], key: string) =>
+        valuationResult.find((indValuation: any) => models.includes(indValuation.model))?.[key];
+
+      const modelConfig: Record<string, any> = {
+        [MODELS.FCFE]: {
+          getValue: (valuationResult: any) => {
+            const modelData = findModelData(valuationResult, [MODELS.FCFE], 'valuationData');
+            return modelData?.[1]?.[modelData[1].length - 1];
+          },
+        },
+        [MODELS.FCFF]: {
+          getValue: (valuationResult: any) => {
+            const modelData = findModelData(valuationResult, [MODELS.FCFF], 'valuationData');
+            return modelData?.[1]?.[modelData[1].length - 1];
+          },
+        },
+        [MODELS.EXCESS_EARNINGS]: {
+          getValue: (valuationResult: any) => {
+            const modelData = findModelData(valuationResult, [MODELS.EXCESS_EARNINGS], 'valuationData');
+            return modelData?.[1]?.[modelData[1].length - 1];
+          },
+        },
+        [MODELS.COMPARABLE_INDUSTRIES]: {
+          getValue: (valuationResult: any) => {
+            const modelData = findModelData(valuationResult, [MODELS.COMPARABLE_INDUSTRIES, MODELS.RELATIVE_VALUATION], 'valuationData');
+            const result = modelData?.valuation?.find((item: any) => item.particular === 'result');
+            return result?.fairValuePerShareAvg;
+          },
+        },
+        [MODELS.NAV]: {
+          getValue: (valuationResult: any) => {
+            const modelData = findModelData(valuationResult, [MODELS.NAV], 'valuationData');
+            return modelData?.valuePerShare?.fairValue;
+          },
+        },
+        [MODELS.RULE_ELEVEN_UA]: {
+          getValue: (processData: any) => processData?.fourthStageInput?.appData?.computations?.valuePerShare,
+          format: (value: any) => formatPositiveAndNegativeValues(value),
+        },
+      };
+
+      if (processData.fourthStageInput || processData.fifthStageInput) {
+        if (modelArray.length === 1) {
+          const model = modelArray[0];
+          const config = modelConfig[model];
+
+          if (config) {
+            const valuation = processData?.fourthStageInput?.appData?.valuationResult;
+            const value = config.getValue(valuation || processData);
+            return getFormattedValue(
+              processData.firstStageInput.currencyUnit,
+              config.format ? config.format(value) : value
+            );
           }
-        })
         }
-        // Here for DCF valuation, we have value value per share in the second last element of the second array
-        if(dcfApproachValuation?.length){
-          return `${processData.firstStageInput.currencyUnit} ${formatNumber(dcfApproachValuation[1][dcfApproachValuation[1].length - 1] ? dcfApproachValuation[1][dcfApproachValuation[1].length - 1] : '-')}`;
-        }
-        else{
-          return `${processData.firstStageInput.currencyUnit} -`;
-        }
-      }
-      else if(modelArray.length === 1 && (modelArray.includes(MODELS.COMPARABLE_INDUSTRIES) || modelArray.includes(MODELS.RELATIVE_VALUATION))){
-        let ccmValuation:any = [];
-        let marketApproachValuePerShare;
-        const valuation = processData?.fourthStageInput?.appData?.valuationResult;
-        if(valuation?.length){
-        valuation.map((indValuation:any)=>{
-          if(indValuation.model === MODELS.COMPARABLE_INDUSTRIES || indValuation.model === MODELS.RELATIVE_VALUATION){
-            ccmValuation = indValuation?.valuationData?.valuation;
-          }
-        })
-        }
-        if(ccmValuation?.length){
-          ccmValuation.map((indElements:any)=>{
-            if(indElements.particular === 'result'){
-              marketApproachValuePerShare = indElements.fairValuePerShareAvg;
-            }
-          })
-          return `${processData.firstStageInput.currencyUnit} ${formatNumber(marketApproachValuePerShare ? marketApproachValuePerShare : '-')}`;
-        }
-        else{
-          return `${processData.firstStageInput.currencyUnit} -`;
+
+        if (processData.fifthStageInput?.totalWeightageModel) {
+          return getFormattedValue(
+            processData.firstStageInput.currencyUnit,
+            processData.fifthStageInput.totalWeightageModel?.weightedVal
+          );
         }
       }
-      else if(modelArray.length === 1 && modelArray.includes(MODELS.NAV)){
-        let navValuation: any = [];
-        const valuation = processData?.fourthStageInput?.appData?.valuationResult;
-        if(valuation?.length){
-        valuation.map((indValuation:any)=>{
-          if(indValuation.model === MODELS.NAV){
-            navValuation = indValuation?.valuationData;
-          }
-        })
-        }
-        if(navValuation){
-          return `${processData.firstStageInput.currencyUnit} ${formatNumber(navValuation?.valuePerShare?.fairValue ? navValuation?.valuePerShare?.fairValue : '-')}`;
-        }
-        else{
-          return `${processData.firstStageInput.currencyUnit} -`;
-        }
-      }
-      else if(modelArray.length === 1 && modelArray.includes(MODELS.RULE_ELEVEN_UA)){
-        const ruleElevenUaAprroachValuation = processData?.fourthStageInput?.appData?.computations?.valuePerShare;
-        return `${processData.firstStageInput.currencyUnit} ${formatNumber(ruleElevenUaAprroachValuation ? formatPositiveAndNegativeValues(ruleElevenUaAprroachValuation) : '0')}`;
-      }
-      else if(processData.fifthStageInput?.totalWeightageModel){
-        // const outstandingShares = convertToNumberOrZero(processData.firstStageInput.outstandingShares);
-        // const reportingUnit = processData.firstStageInput?.reportingUnit;
-        // const multiplier = GET_MULTIPLIER_UNITS[`${reportingUnit}`] || 100000; //In default case, setting multiplier to 1 lakh
-        return `${processData.firstStageInput.currencyUnit} ${formatNumber(processData.fifthStageInput.totalWeightageModel?.weightedVal || '-')}`;
-      }
-      else{
-        return '-';
-      }
-    }
-    else{
       return '-';
-    }
   }
 
   filterByCompany(event:any){

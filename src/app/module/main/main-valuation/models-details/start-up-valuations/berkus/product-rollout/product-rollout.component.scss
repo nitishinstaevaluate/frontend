@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+
+  // mat-label{
+  //   color:#38a3b8;
+  // }
+  .field{
+    padding-left: 2.5%;
+    padding-top: 0%;
+    padding-right: 2.5%;
+  }
+
+  .c-decorated-header {
+    position: relative;
+    padding-top: 1%;
+  
+  }
+  
+  .c-decorated-header h3{
+    position: relative;
+    text-align: left;
+  
+    font-family: 'AR One Sans', sans-serif;
+    font-size: 19px;
+    // color: #666666;
+    color: #4b6df3;
+    cursor: pointer;
+  }
+  
+  .c-decorated-header h3:after{
+    content: "";
+    height: 1px;
+    position: absolute;
+    right: 0;
+    left: 19%;
+    top: 20%;
+    bottom: 0;
+    margin: auto;
+    background: #e2e2e6;
+  }
+  .c-decorated-header h3 span {
+    position: relative;
+    font-size: 17px;
+    font-weight: 500;
+    font-stretch: condensed;
+    color: #4b6df3;
+    font-family: 'AR One Sans', sans-serif;
+  }
+.c-decorated-header_link-view-more {
+  position: absolute;
+  top: 12px;
+  right: 40px;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: 'AR One Sans', sans-serif;
+  color: #aaaaaa;
+  text-decoration: none;
+  background: #fcf8fe;;
+  padding: 5px;
+}
+
+.button-back-mat{
+  box-shadow: 1px 2px 15px #d1d1d1;
+  margin-right: 1%;
+  color:#ffffff !important;
+  background-color: #fe6060 !important;
+  // background-color: #0cd18f !important;
+  border-radius: 8px;
+  position: relative;
+  font-family: 'AR One Sans', sans-serif;
+  font-weight: 500;
+  width: 10%;
+  padding-left: 4%;
+}
+.button-save-mat, .button-save-mat-disable{
+    box-shadow: 1px 2px 15px #d1d1d1;
+    color:#ffffff !important;
+    background-color: #0cd18f !important;
+    border-radius: 8px;
+    position: relative;
+    font-family: 'AR One Sans', sans-serif;
+    font-weight: 500;
+    width: 10%;
+  }
+  .button-save-mat-disable{
+    background-color: #62cca9 !important;
+    cursor: not-allowed !important;
+  }
+.button-save{
+  position: absolute;
+    left: 112%;
+    transform: scale(0.7);
+    top: -8%;
+    mat-icon{
+      font-weight: bold;
+      color: #ffffff;
+    }
+}
+
+.button-back{
+  position: absolute;
+    right: 112%;
+    transform: scale(0.7);
+    top: -8%;
+    mat-icon{
+      font-weight: bold;
+      color: #ffffff;
+      transform: rotate(180deg);
+    }
+}
+.btn-prop{
+  text-align: right;
+  padding-bottom: 1%;
+  padding-top: 1%;
+  padding-right: 2%;
+}
+
+.material-textfield-si {
+  position: relative;
+  width: 80%;
+}
+.label-container {
+    display: flex;
+    align-items: center;
+  }
+
+  
+.company-list-inp{
+    font-size: 1rem !important;
+    outline: none;
+    border: 1px solid #e4e4e4 !important;
+    border-radius: 10px;
+    color: #6d6d6d !important;
+    transition: 0.1s ease-out !important;
+    font-family: 'AR One Sans', sans-serif !important;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    width: 100%;
+    padding-left: 2%;
+    box-shadow: 1px 2px 10px #f0ebeb !important;
+    height: 50px !important;
+    position: relative;
+  }
+
+    .new-inp {
+        font-size: 1rem;
+        outline: none;
+        border: 1px solid #e4e4e4;
+        border-radius: 10px;
+        color: #6d6d6d;
+        transition: 0.1s ease-out;
+        font-family: 'AR One Sans', sans-serif;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        width: 100%;
+        padding-left: 2%;
+        box-shadow: 1px 2px 10px #f0ebeb;
+        height: 50px;
+      }
+      
+      .new-inp:focus {
+        border-color: #6200ee;
+      }
+      
+      .new-inp:focus+label {
+        color: #6200ee;
+        top: 3%;
+        transform: translateY(-50%) scale(0.8) !important;
+      }
+      
+      .new-inp:focus + label + .tool-class {
+        display: block;
+        position: absolute;
+        left: 20%;
+        top: 3%;
+        transform: translateY(-50%) scale(0.6) !important;
+        background: white;
+        padding-right: .5%;
+        mat-icon{
+          color: #6200ee;
+        }
+      }
+
+      .new-inp:not(:placeholder-shown)+label {
+        top: 3%;
+        transform: translateY(-50%) scale(0.8) !important;
+      }
+      
+      .new-inp:not(:focus)::placeholder {
+        opacity: 0;
+      }
+
+      .company-info-span{
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+      }
+
+      ::ng-deep .form-one-tooltip .mdc-tooltip__surface {
+        font-size: 14px !important;
+        outline: none;
+        border: 1px solid #1e70a3 !important;
+        border-radius: 8px !important;
+        color:#0b5f90 !important;
+        transition: 0.1s ease-out !important;
+        font-family: 'AR One Sans', sans-serif !important;
+        padding-left:3% !important;
+        box-shadow: 1px 2px 10px #eaf7ff !important;
+        background-color:#eaf7ff !important;
+        text-align: left;
+        line-height: 165% !important;
+        min-width: 400px !important;
+      }
+
+      .outer-wrapper{
+        box-shadow: 1px 2px 10px #cecece;
+        border-radius: 10px;
+        background-color: #ffffff;
+      }
+
+
+::ng-deep .control-form-field .mdc-text-field .mat-mdc-form-field-focus-overlay{
+    background-color: #ffffff !important;
+  }
+  
+  ::ng-deep .control-form-field .mdc-text-field .mat-mdc-form-field-flex .mat-mdc-form-field-infix .mdc-floating-label .mat-mdc-form-field-required-marker{
+    display: none;
+  }
+  
+  ::ng-deep .control-form-field .mat-mdc-form-field-subscript-wrapper{
+    border-top: 1px solid #ffffff;
+  }
+  ::ng-deep .control-form-field .mat-mdc-form-field-subscript-wrapper:hover{
+    border-top: 1px solid #ffffff;
+  }
+  
+  ::ng-deep .control-form-field .mdc-text-field .mat-mdc-form-field-flex .mat-mdc-form-field-infix .mdc-floating-label{
+    top: 58%;
+    left: 2%;
+    color: #6d6d6d;
+    font-family: 'AR One Sans', sans-serif;
+  }
+  
+  ::ng-deep .control-form-field .mdc-text-field .mat-mdc-form-field-flex .mat-mdc-form-field-infix:focus-within .mdc-floating-label {
+    top: 47%;
+    background-color: #ffffff;
+    font-size: 1rem !important;
+    color: #6d6d6d !important;
+    font-family: 'AR One Sans', sans-serif;
+  }
+  
+  ::ng-deep .control-form-field .mdc-text-field .mat-mdc-form-field-flex .mat-mdc-form-field-infix .mdc-floating-label--float-above {
+    top: 47%;
+    background-color: #ffffff;
+    font-family: 'AR One Sans', sans-serif;
+    z-index: 1;
+    padding-right: 1%;
+  }
+  ::ng-deep .control-form-field .mdc-text-field{
+    padding: 0px;
+  }
+  .ind-4{
+    color:#6d6d6d !important;
+    font-size: 1rem !important;
+  }
+  ::ng-deep .control-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before  {
+    border-bottom: 1px solid #ffffff;
+  }
+  ::ng-deep .control-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after  {
+    border-bottom: 1px solid #ffffff;
+  }
+  .company-list-rmve-icon{
+    color: #7c7c7c;
+    transform: scale(0.8);
+  }
+  .company-list-rmve{
+    cursor: pointer;
+    position: absolute;
+    right: 1%;
+    top: 46%;
+    z-index: 1;
+  }
+  .company-list-rmve-icon:hover{
+    color: #e71a1a;
+    transition: 0.4s;
+  }
+
+.question {
+    background-color: #f0f0f0;
+    margin-bottom: 0px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    font-family: 'AR One Sans', sans-serif;
+    padding-top: 0.4%;
+    padding-bottom: 0.4%;
+  }
+
+  .question-index {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 15px;
+    font-size: 10px;
+  }
+
+  .question-text {
+    font-size: 16px;
+    color: #333;
+  }
+
+  .questions-container h2 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 20px;
+  }
+
+  .rm-pad{
+    margin-bottom: 6px;
+    padding-top: 1%;
+    padding-left: 1%;
+  }
+
+  .question-info:hover{
+    .tool-class svg {
+      cursor: pointer !important;
+      .path-svg{
+        stroke:#27d69b !important;
+        stroke-width:45px !important;
+        transition: ease-out 0.3s !important;
+        cursor: pointer !important;
+      }
+      .model-polyline{
+        stroke:#27d69b !important;
+        transition: ease-out 0.3s !important;
+        cursor: pointer !important;
+      }
+      line{
+        stroke:#27d69b !important;
+        transition: ease-out 0.3s !important;
+        cursor: pointer !important;
+      }
+    }
+  }
+
+.company-list-error{
+    margin-left: -2%;
+    font-size: 10px;
+    margin-top: -2%;
+    color: red;
+    font-size: 10px;
+    font-family: 'AR One Sans';
+  }

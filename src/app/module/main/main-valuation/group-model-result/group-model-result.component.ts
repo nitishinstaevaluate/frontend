@@ -56,13 +56,15 @@ export class GroupModelResultComponent implements OnChanges,OnInit {
   ccmVPSmed:any;
   vwapNse:any;
   vwapBse:any;
+  hideModelWeightage:any;
   constructor(private calculationsService:CalculationsService,
     private snackBar:MatSnackBar,
     private processStatusManagerService:ProcessStatusManagerService){
     
   }
   ngOnInit(): void {
-    this.checkProcessExist()
+    this.checkProcessExist();
+    this.validateField();
   }
   checkProcessExist(){
     if(!this.transferStepperthree){
@@ -77,6 +79,13 @@ export class GroupModelResultComponent implements OnChanges,OnInit {
         }
       }
     }
+  }
+
+  validateField(){
+    this.calculationsService.hideModelWeightage.subscribe((response:any)=>{
+      if(response) this.hideModelWeightage = true;
+      else this.hideModelWeightage = false;
+    })
   }
 
   ngOnChanges(changes:SimpleChanges){
@@ -257,11 +266,13 @@ export class GroupModelResultComponent implements OnChanges,OnInit {
     );
   }
   checkModelWeightageData(){
+    const excludedModels = [MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL];
     const resultData:any = this.transferStepperthree?.formFourData?.appData?.valuationResult
-    const inputData = this.transferStepperthree?.formOneAndThreeData?.model;
+    const inputData = this.transferStepperthree?.formOneAndThreeData?.model.filter((model: string) => !excludedModels.includes(model));
     if(this.data && inputData && this.data?.length !== inputData?.length){
       this.calculateModelWeigtagePayload.results = [];
       this.loadWeightageSlider();
+      return true;
     }
     let bool=true;
     if(resultData && inputData &&  resultData?.length === inputData?.length){
@@ -435,13 +446,14 @@ export class GroupModelResultComponent implements OnChanges,OnInit {
     modelWeightageSlider(event:any,modelName:any,maxValue:number,sliderValue:number){
       let sortedModelArray = [];
       const slider = event.target as HTMLInputElement;
-      
+      const excludedModels = [MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL];
       const availPercentage = this.setModelSliderValue(modelName,parseFloat(slider.value));
       const modelIndexToRemove = this.transferStepperthree?.formOneAndThreeData.model.sort().indexOf(modelName);
        sortedModelArray = this.transferStepperthree?.formOneAndThreeData.model
        .sort()
        .slice(0, modelIndexToRemove)
-       .concat(this.transferStepperthree?.formOneAndThreeData.model.slice(modelIndexToRemove + 1));
+       .concat(this.transferStepperthree?.formOneAndThreeData.model.slice(modelIndexToRemove + 1))
+       .filter((model: string) => !excludedModels.includes(model))
       const remainingEle = modelIndexToRemove !== -1 ? modelIndexToRemove - sortedModelArray.length : sortedModelArray.length; 
       if(sortedModelArray.length == 1){
         for (let i = 0 ; i <= sortedModelArray.length;i++){
@@ -637,5 +649,10 @@ export class GroupModelResultComponent implements OnChanges,OnInit {
         this.calculateModelWeigtagePayload.results.splice(relativeValuationIndex,1,{model:MODELS.RELATIVE_VALUATION,value:this.relativeValuation,weightage:this.relativeValSlider});
       }
       this.getWeightedValuation();
+    }
+
+    showWeightageSection(){
+      const excludedModels = [MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL];
+      return this.transferStepperthree?.formOneAndThreeData?.model?.length && this.transferStepperthree?.formOneAndThreeData?.model.filter((model: string) => !excludedModels.includes(model)).length > 1 && !this.hideModelWeightage;
     }
 }

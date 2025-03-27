@@ -1,0 +1,27 @@
+<div class="container" *ngIf="isValuationValid()">
+    <header>
+      <h1>Venture Capital Valuation</h1>
+      <p>Analyze and calculate key metrics</p>
+    </header>
+    <div class="label-value-pair">
+      <label>{{ ventureCapitalValuation?.estimatedExitValue?.label }}</label>
+      <span>{{ formatNumber(ventureCapitalValuation?.estimatedExitValue?.value) }}</span>
+    </div>
+    <div class="label-value-pair">
+      <label>{{ventureCapitalValuation?.returnOnInvestment?.label}}</label>
+      <span>{{ formatNumber(ventureCapitalValuation?.returnOnInvestment?.value) }}%</span>
+    </div>
+    <h2 class="sub-header">{{ventureCapitalValuation.presentPostMoneyValue?.label}}</h2>
+    <div class="label-value-pair">
+      <label>{{ ventureCapitalValuation?.presentValue?.label }}</label>
+      <span>{{ formatNumber(ventureCapitalValuation?.presentValue?.value) }}</span>
+    </div>
+    <div class="label-value-pair">
+        <label>{{ ventureCapitalValuation?.preMoneyValue?.label }}</label>
+        <span>{{ formatNumber(ventureCapitalValuation?.preMoneyValue?.value) }}</span>
+      </div>
+    <div class="label-value-pair">
+        <label>{{ ventureCapitalValuation?.vcOwnership?.label }}</label>
+        <span>{{ formatNumber(ventureCapitalValuation?.vcOwnership?.value) }}%</span>
+      </div>
+  </div>

@@ -44,14 +44,14 @@
             </div>
             </div>
           </div>
-        <div [class.selected]="selectedMenuItem === '4'" (click)="selectMenuItem('4')" [ngClass]="selectedMenuItem === 4 ? 'container navbars-inprogress navbar-h' : stepStatusOfFour === 'true' ?  'container navbars navbar-h' :  'container navbars-pending navbar-h'" style="margin-top: 10%;">
+        <div [class.selected]="selectedMenuItem === '4'" (click)="selectMenuItem('4')" [ngClass]="hideReviewFormTab ? 'blackbox container' : selectedMenuItem === 4 ? 'container navbars-inprogress navbar-h' : stepStatusOfFour === 'true' ?  'container navbars navbar-h' :  'container navbars-pending navbar-h'" style="margin-top: 10%;">
             <p [ngClass]="selectedMenuItem === 4 ? 'new-company-det-inprogress new-company-h' : stepStatusOfFour === 'true'? 'new-company-det new-company-h' :  'new-company-det new-company-h'">Review Form</p>
           <div class="row" style="padding-bottom: 7%;">
             <div class="col-xl-2" style="position: relative;">
               <span [ngClass]="selectedMenuItem === 4 ? 'mat-bullet-inprogress mat-bullet-h' : stepStatusOfFour === 'true'? 'mat-bullet mat-bullet-h' :  'mat-bullet-pending mat-bullet-h'"><mat-icon>list_alt</mat-icon></span>
             </div>
             <div class="col-xl-8">
-              <p [ngClass]="selectedMenuItem === 4 ? 'status-inprogress status-h' : stepStatusOfFour === 'true'? 'status-completed status-h' :  'status-pending status-h'">{{ selectedMenuItem === 4 ? 'In-progress' : stepStatusOfFour === 'true'? 'Completed' : 'Pending'}}</p>
+              <p [ngClass]="hideReviewFormTab ? 'status-not-allowed status-h' : selectedMenuItem === 4 ? 'status-inprogress status-h' : stepStatusOfFour === 'true'? 'status-completed status-h' :  'status-pending status-h'">{{ hideReviewFormTab ? 'Disabled' : selectedMenuItem === 4 ? 'In-progress' : stepStatusOfFour === 'true'? 'Completed' : 'Pending'}}</p>
             </div>
           </div>
        </div>

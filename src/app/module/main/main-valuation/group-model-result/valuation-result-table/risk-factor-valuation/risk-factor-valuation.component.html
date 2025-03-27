@@ -1,0 +1,35 @@
+<div class="modern-table-container" *ngIf="riskFactorValuation?.length">
+    <!-- <div class="modern-table-title">Risk Factors Overview</div> -->
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>Risk Factors</th>
+          <th style="text-align: center;">Risk Factor Coefficient</th>
+          <th style="text-align: center;">Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of riskFactorValuation">
+            <ng-container *ngIf="!data.header">
+                <td>{{ data.label }}</td>
+                <td style="text-align: center;">{{ data.riskFactorCoeff }}</td>
+                <td style="text-align: center;">{{ data?.status || 'Resubmit the model form for Risk Factor'}}</td>
+            </ng-container>
+            <ng-container *ngIf="data.label === 'Total'">
+                <td>{{ data.label }}</td>
+                <td style="text-align: center;">{{ data.total }}</td>
+                <td style="text-align: center;font-weight: normal;" [ngClass]="statusColourScheme(data?.status)">{{ data?.status || 'Required Resubmit'}}</td>
+            </ng-container>
+          </tr>
+      </tbody>
+    </table>
+
+    <div class="final-status-container-rf">
+      <div class="status-summary">
+      </div>
+      <p class="status-message">
+          <strong style="text-transform: capitalize;">{{this.interpretationStatus}}:-</strong> {{this.interpretationInfo}}
+      </p>
+    </div>
+  </div>
+  

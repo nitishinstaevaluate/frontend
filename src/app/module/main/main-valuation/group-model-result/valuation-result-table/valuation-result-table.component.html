@@ -1,5 +1,5 @@
 <div class="mat-tab-g">
-  <mat-tab-group style="padding-bottom: 1% !important;background-color: #ffffff;border-radius: 20px;" class="tab-group" mat-stretch-tabs="false" mat-align-tabs="start" [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabSelectionChange()">
+  <mat-tab-group style="padding-bottom: 1% !important;background-color: #ffffff;border-radius: 20px;" class="tab-group" mat-stretch-tabs="false" mat-align-tabs="start" (selectedTabChange)="onTabSelectionChange($event)">
   <mat-tab label="FCFE" *ngIf = "fcfe">
     <div style="display: flex; align-items: center; justify-content: space-between;padding: 1%;">
       <div style="display: flex; align-items: center;width: 85%;">
@@ -521,6 +521,26 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Berkus" *ngIf="berkus">
+    <div class="table-container" style="display: block;">
+      <app-berkus-valuation></app-berkus-valuation>
+    </div>
+  </mat-tab>
+  <mat-tab label="Risk Factor" *ngIf="riskFactor">
+    <div class="table-container" style="display: block;">
+      <app-risk-factor-valuation></app-risk-factor-valuation>
+    </div>
+  </mat-tab>
+  <mat-tab label="Score Card" *ngIf="scoreCard">
+    <div class="table-container" style="display: block;">
+      <app-score-card-valuation></app-score-card-valuation>
+    </div>
+  </mat-tab>
+  <mat-tab label="Venture Capital" *ngIf="ventureCapital">
+    <div class="table-container" style="display: block;">
+      <app-venture-capital-valuation></app-venture-capital-valuation>
     </div>
   </mat-tab>
   <mat-tab label="Rule 11 UA" *ngIf="ruleElevenUa">

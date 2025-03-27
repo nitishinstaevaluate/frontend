@@ -1,0 +1,105 @@
+<div *ngIf="controls.RISK_FACTOR.type === 'riskFactor'" class="pt-2">
+    <form [formGroup]="riskFactorForm" class="outer-wrapper" *ngIf="riskFactorRegConfig.length">
+        <div class="row">
+          <ng-container *ngFor="let config of riskFactorRegConfig;index as i">
+            <ng-container *ngIf="config.type === 'header'">
+                <div class="col-xl-12" style="padding-bottom: 1%;">
+                    <div [class]='config.class'>
+                        <h3>
+                            <span style="padding-left: 2%;">{{config.label}}</span>
+                        </h3>
+                        <div class='c-decorated-header_link-view-more'></div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!config.type">
+                  <div class="col-xl-12" style="padding-top: 0%;">
+                    <div class="header-container">
+                        <div class="question-index">{{ i }}</div>
+                        <div class="header-title">{{ config.subHead }}</div>
+                        <div class="value-content" *ngIf="riskFactorForm.controls[config.controlNameRFCoeff]?.value !== null && riskFactorForm.controls[config.controlNameRFCoeff]?.value !== ''">
+                            <div class="risk-factor-coefficient-container">
+                                <div class="risk-factor-coefficient-label">Risk Factor Coefficient</div>
+                            </div>
+                        </div>
+                      </div>
+                    <div class="question">
+                        <div class="question-text" >- {{config.question}} </div>
+                        <div class="question-info rm-pad" >
+                            <span class="tool-class">
+                              <svg [matTooltip]="config.tooltip" matTooltipPosition="right" matTooltipClass='model-tooltip' xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 512">
+                                <path d="M248,64C146.39,64,64,146.39,64,248s82.39,184,184,184,184-82.39,184-184S349.61,64,248,64Z" class="path-svg" style="fill:none;stroke:#3355dd;stroke-miterlimit:10;stroke-width:32px;" 
+                                fill="#ff0000"></path>
+                                <polyline points="220 220 252 220 252 336" class="model-polyline" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px;">
+                                </polyline><line x1="208" y1="340" x2="296" y2="340" style="fill:none;stroke:#3355dd;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px;">
+                              </line><path d="M248,130a26,26,0,1,0,26,26A26,26,0,0,0,248,130Z" fill="#ff0000"></path></svg>
+                            </span>
+                        </div>
+                      </div>
+                  </div>
+                </ng-container>
+              <div class = 'col-xl-12 col-md-12 field' *ngIf="!config.type && config.controlName">
+                    <div class="row">
+                      <div class="col-xl-6 col-md-6">
+                        <div class="material-textfield-si">
+                            <mat-form-field appearance="fill" class="control-form-field" style="width: 100%;">
+                                <mat-label>
+                                  <div class="label-container">
+                                    {{ config.label }}*
+                                  </div>
+                                </mat-label>
+                                <span class="company-list-rmve" *ngIf="riskFactorForm.controls[config.controlName]?.value" style="right:7%;">
+                                <mat-icon class="company-list-rmve-icon" (click)="clearInput(config.controlName, config.controlNameRFCoeff)">close</mat-icon>
+                                </span>
+                                
+                                <mat-select [formControlName]="config.controlName" class="new-inp company-list-inp nature-of-instrument" [placeholder]="config.placeholder" (selectionChange)="onSelectorChange(config.controlNameRFCoeff, $event.value, config.options)">
+                                <mat-option *ngFor="let data of config.options" class="auto-class" [value]="data.value">
+                                    {{ data.name }}
+                                </mat-option>
+                                </mat-select>
+                                <mat-error class="company-list-error" *ngIf="riskFactorForm.controls[config.controlName].touched && riskFactorForm.controls[config.controlName].errors">
+                                  <span *ngIf="hasError(config.controlName,'required',riskFactorForm)" class="error-text" style="padding-left: 0%;">Please select {{ config.label }}</span>
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                      </div>
+                      <div class="col-xl-6 col-md-6">
+                        <div class="value-display-wrapper" *ngIf="riskFactorForm.controls[config.controlNameRFCoeff]?.value !== null && riskFactorForm.controls[config.controlNameRFCoeff]?.value !== ''">
+                            <div class="dynamic-value-card small-card">
+                              <div class="value-icon">
+                                <mat-icon class="risk-factor-icon">analytics</mat-icon>
+                              </div>
+                              <div class="value-content">
+                                <!-- <div class="label">Risk Factor Coefficient</div> -->
+                                <div class="value">
+                                  {{ riskFactorForm.controls[config.controlNameRFCoeff]?.value }}
+                                </div>
+                              </div>
+                              <!-- <div class="value-content">
+                                <div class="label">Risk Factor Coefficient</div>
+                                <div class="value">
+                                  {{ riskFactorForm.controls[config.controlNameRFCoeff]?.value }}
+                                </div>
+                              </div> -->
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <br>
+              </div>
+          </ng-container>
+
+            <div class="col-md-12 btn-prop">
+              <button (click)="previous()" mat-raised-button class="button-back-mat">
+                <span class="button-back"><mat-icon>send</mat-icon></span>
+                  Back
+              </button>
+
+          <button (click)="submit()" [disabled]="riskFactorForm.invalid" [ngClass]="riskFactorForm.invalid ? 'button-save-mat-disable' :'button-save-mat'" mat-raised-button>
+              Next
+              <span class="button-save"><mat-icon>send</mat-icon></span>
+          </button>
+      </div>
+        </div>
+      </form>  
+</div>

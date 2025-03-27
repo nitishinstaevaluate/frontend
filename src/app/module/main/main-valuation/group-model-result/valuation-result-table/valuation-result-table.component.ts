@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {  MatTableDataSource } from '@angular/material/table';
-import { COMMON_COLUMN, EXCESS_EARNING_COLUMN, FCFE_COLUMN, FCFF_COLUMN, MODELS, helperText} from 'src/app/shared/enums/constant';
+import { COMMON_COLUMN, COMPONENT_ENUM, EXCESS_EARNING_COLUMN, FCFE_COLUMN, FCFF_COLUMN, MODELS, helperText} from 'src/app/shared/enums/constant';
 import { formatPositiveAndNegativeValues } from 'src/app/shared/enums/functions';
 import { GenericModalBoxComponent } from 'src/app/shared/modal box/generic-modal-box/generic-modal-box.component';
 import { CustomDatePipe } from 'src/app/shared/pipe/date.pipe';
@@ -15,6 +15,7 @@ import { saveAs } from 'file-saver';
 import { SensitivityAnalysisService } from 'src/app/shared/service/sensitivity-analysis.service';
 import { ROLE_MAPPING } from 'src/app/shared/enums/role';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { ComponentInteractionService } from 'src/app/shared/service/component-interaction.service';
 
 @Component({
   selector: 'app-valuation-result-table',
@@ -39,6 +40,10 @@ excessEarn = false;
 nav=false;
 ruleElevenUa=false;
 marketPrice = false;
+berkus = false;
+riskFactor = false;
+scoreCard = false;
+ventureCapital = false;
 tableData:any;
 multiples:any;
 valuationDataReport:any=[];
@@ -139,7 +144,6 @@ ngOnChanges(changes:SimpleChanges): void {
   this.formData = this.transferStepperthree;
   this.loadStageFiveDetails();
   this.loadValuationTable()
-  this.onTabSelectionChange();
 }
   
 transposeData(data: any[][]): any[][] {
@@ -417,6 +421,10 @@ this.dataSourceExcessEarn && this.transferStepperthree?.formOneAndThreeData?.mod
 this.dataSourceNav && this.transferStepperthree?.formOneAndThreeData?.model.includes('NAV') ? this.nav = true : this.nav = false;
 this.transferStepperthree?.formFourData?.appData && this.transferStepperthree?.formOneAndThreeData?.model.includes(MODELS.RULE_ELEVEN_UA) ? this.ruleElevenUa = true : this.ruleElevenUa = false;
 this.transferStepperthree?.formFourData?.appData && this.transferStepperthree?.formOneAndThreeData?.model.includes(MODELS.MARKET_PRICE) ? this.marketPrice = true : this.marketPrice = false;
+this.transferStepperthree?.formOneAndThreeData?.model.includes(MODELS.BERKUS) ? this.berkus = true : this.berkus = false;
+this.transferStepperthree?.formOneAndThreeData?.model.includes(MODELS.RISK_FACTOR) ? this.riskFactor = true : this.riskFactor = false;
+this.transferStepperthree?.formOneAndThreeData?.model.includes(MODELS.SCORE_CARD) ? this.scoreCard = true : this.scoreCard = false;
+this.transferStepperthree?.formOneAndThreeData?.model.includes(MODELS.VENTURE_CAPITAL) ? this.ventureCapital = true : this.ventureCapital = false;
 }
 
 checkIndustryOrCompany(){
@@ -482,28 +490,10 @@ formatDate(epochTimestamp:any) {
     return `${day}-${month}-${year}`;
 }
 
-onTabSelectionChange() {
-  // Update the selectedTabIndex when the user selects a tab
-  const findFirstEle = this.transferStepperthree?.formOneAndThreeData?.model.sort();
-  if(findFirstEle){
-    switch (findFirstEle[0]) {
-      case 'FCFE':
-        this.selectedTabIndex = 0;
-        break;
-      case 'FCFF':
-        this.selectedTabIndex = 1;
-        break;
-      case 'Relative_Valuation':
-        this.selectedTabIndex = 2;
-        break;
-      case 'Excess_Earnings':
-        this.selectedTabIndex = 3;
-        break;
-      default:
-        console.log("went in default");
-    
-  }
-  }
+onTabSelectionChange(event:any) {
+  const labelTypeBool = event?.tab?.textLabel === 'Berkus' || event?.tab?.textLabel === 'Risk Factor' || event?.tab?.textLabel === 'Score Card' || event?.tab?.textLabel === 'Venture Capital';
+ if(labelTypeBool && event?.tab?.isActive) this.calculationService.hideModelWeightage.next(true);
+ else this.calculationService.hideModelWeightage.next(false);
 }
 
 exportPdf(modelName:string){

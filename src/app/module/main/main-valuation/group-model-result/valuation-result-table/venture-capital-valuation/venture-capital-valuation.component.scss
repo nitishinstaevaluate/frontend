@@ -1,0 +1,158 @@
+.container {
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 12px;
+    animation: fadeInUp 1s ease-out;
+    overflow: hidden;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: headerAnimation 0.8s ease-in-out forwards;
+  }
+  
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 15px;
+    font-family: 'AR One Sans', sans-serif;
+  }
+  
+  header p {
+    font-size: 1.2rem;
+    color: #666;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0.3s forwards;
+    font-family: 'AR One Sans', sans-serif;
+  }
+  
+  /* Label-Value Pair Styling */
+  .label-value-pair {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+    opacity: 0;
+    animation: labelValueAnimation 0.8s ease-out 0.5s forwards;
+  }
+  
+  .label-value-pair:last-child {
+    border-bottom: none;
+  }
+  
+  .label-value-pair label {
+    font-weight: 500;
+    color: #333;
+    transition: transform 0.3s ease;
+    font-family: 'AR One Sans', sans-serif;
+  }
+  
+  .label-value-pair span {
+    font-weight: 600;
+    color: #555;
+    position: relative;
+    cursor: pointer;
+    transform: translateY(5px);
+    transition: transform 0.3s ease;
+    font-family: 'AR One Sans', sans-serif;
+  }
+  
+  /* Label Hover Effect */
+  .label-value-pair span:hover {
+    transform: translateY(-5px);
+    color: #007bff;
+  }
+  
+  .label-value-pair span:hover::after {
+    // content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 120%;
+    background: #444;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Sub-header Styling */
+  .sub-header {
+    margin-top: 30px;
+    font-size: 1.7rem;
+    color: #555;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0.7s forwards;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes labelValueAnimation {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes headerAnimation {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes buttonAnimation {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .label-value-pair {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .label-value-pair span {
+      margin-top: 10px;
+    }
+  }

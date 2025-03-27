@@ -94,7 +94,7 @@
                 </div>
 
                 <!-- Reporting unit -->
-                <div class="col-md-6 field" style="padding-top: 0%;">
+                <div class="col-md-6 field" style="padding-top: 0%;" *ngIf="hideReviewForm('reportingUnit')">
                   <div class="material-textfield">
                     <!-- <select id="reportingUnit" class="new-inp" formControlName="reportingUnit">
                       <option value="" disabled selected>Select reporting unit</option>
@@ -138,7 +138,7 @@
               </div>
 
               <!-- currency unit -->
-              <div class="col-md-6 field" style="padding-top: 0%;">
+              <div class="col-md-6 field" style="padding-top: 0%;" *ngIf="hideReviewForm()">
                 <div class="material-textfield">
                   <!-- <select id="currencyUnit" class="new-inp" formControlName="currencyUnit">
                     <option value="" disabled selected>Select currency</option>
@@ -181,7 +181,7 @@
             </div>
 
                 <!-- location -->
-                <div class="col-md-6 field" style="padding-top: 0%;">
+                <div class="col-md-6 field" style="padding-top: 0%;" *ngIf="hideReviewForm()">
                     <!-- <div class="material-textfield">
                       <input class="new-inp"  formControlName="location" [type]="modelControl.modelValuation.options.location.type" [placeholder]="modelControl.modelValuation.options.location.placeholder"/>
                       <label>Location</label>
@@ -244,7 +244,7 @@
               </div> -->
 
                 <!-- outstanding shares -->
-                <div class="col-md-6 field" style="padding-top: 0%;">
+                <div class="col-md-6 field" style="padding-top: 0%;" *ngIf="hideReviewForm()">
                       <!-- <div class="material-textfield">
                         <input class="new-inp" [type]="modelControl.modelValuation.options.outstandingShares.type"  formControlName="outstandingShares" [placeholder]="modelControl.modelValuation.options.outstandingShares.placeholder"/>
                         <label>Outstanding Shares</label>

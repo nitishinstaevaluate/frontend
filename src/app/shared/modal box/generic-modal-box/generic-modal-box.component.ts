@@ -1,6 +1,6 @@
 import { Component , ElementRef, Inject, Renderer2, OnInit, ViewChild,AfterViewInit, Input} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { GLOBAL_VALUES, INCOME_APPROACH, MARKET_APPROACH, MODELS, NET_ASSET_APPROACH, RULE_ELEVEN_UA_APPROACH, XL_SHEET_ENUM, helperText } from '../../enums/constant';
+import { GLOBAL_VALUES, INCOME_APPROACH, MARKET_APPROACH, MODELS, NET_ASSET_APPROACH, RULE_ELEVEN_UA_APPROACH, START_UP_APPROACH, XL_SHEET_ENUM, helperText } from '../../enums/constant';
 import groupModelControl from '../../enums/group-model-controls.json'
 import WebViewer, { Core } from '@pdftron/webviewer';
 import PDFNet  from '@pdftron/webviewer';
@@ -78,6 +78,11 @@ ctmSelectedModel:any='';
 relativeValuationSelectedModel:any='';
 marketPriceSelectedModel:any = '';
 ruleElevenUaSelectedModel:any = '';
+berkusSelectedModel:any = '';
+riskFactorSelectedModel:any = '';
+scoreCardSelectedModel:any = '';
+ventureCapitalSelectedModel:any = '';
+costToDuplicateSelectedModel:any = '';
 slumpSaleSelectedModel:any = '';
 projectionYearSelect:any='';
 terminalGrowthRates:any='';
@@ -86,6 +91,7 @@ incomeApproachmodels:any=[];
 netAssetApproachmodels:any=[];
 marketApproachmodels:any=[];
 ruleElevenApproachModels:any=[];
+startUpApproachModels:any=[];
 files:any=[];
 excelSheetId:any;
 fileName:any;
@@ -359,6 +365,15 @@ createModelControl(modelName:string,approach:string){
       this.clearModelRadioButton(modelName)
     }
   }
+  if(approach === 'startUpValuationApproach'){
+    if(!this.startUpApproachModels.includes(modelName)){
+      this.startUpApproachModels.push(modelName);
+    }
+    else{
+      this.startUpApproachModels.splice(this.startUpApproachModels.indexOf(modelName), 1);
+      this.clearModelRadioButton(modelName)
+    }
+  }
 }
 
 selectProjections(projectionName:string,approach:string){
@@ -380,7 +395,13 @@ projectionYear(value:any){
 }
 
 submitModelValuation(){
-  if(this.incomeApproachmodels.length === 0 && this.netAssetApproachmodels.length === 0 && this.marketApproachmodels.length === 0 && this.ruleElevenApproachModels.length === 0){
+  if(
+    !this.incomeApproachmodels.length && 
+    !this.netAssetApproachmodels.length && 
+    !this.marketApproachmodels.length && 
+    !this.ruleElevenApproachModels.length && 
+    !this.startUpApproachModels.length
+  ){
     this.snackBar.open('Please select valuation models','Ok',{
       horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -389,6 +410,19 @@ submitModelValuation(){
     })
     return;
   }
+  const excelValidation = () => {
+    if(!this.excelSheetId){
+      this.fileUploadStatus = false;
+      this.snackBar.open('Please upload excel sheet','Ok',{
+        horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            duration: 3000,
+            panelClass: 'app-notification-error'
+      })
+      return;
+    }
+  }
+
   if(this.fcfeSelectedModel || this.fcffSelectedModel || this.excessEarningSelectedModel){
     if(this.projectionYearSelect === 'Going_Concern'){
 
@@ -414,7 +448,9 @@ submitModelValuation(){
         })
         return;
     }
+    excelValidation();
   }
+   
   if(this.ruleElevenUaSelectedModel){
     if(!this.issuanceCheckbox.value && !this.transferCheckbox.value){
       this.snackBar.open('Please select the rule eleven UA options','Ok',{
@@ -425,20 +461,10 @@ submitModelValuation(){
       })
       return;
     }
-  }
-
-  if(!this.excelSheetId){
-    this.fileUploadStatus = false;
-    this.snackBar.open('Please upload excel sheet','Ok',{
-      horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          duration: 3000,
-          panelClass: 'app-notification-error'
-    })
-    return;
+    excelValidation();
   }
   
-  this.models=[...this.incomeApproachmodels,...this.netAssetApproachmodels,...this.marketApproachmodels,...this.ruleElevenApproachModels];
+  this.models=[...this.incomeApproachmodels,...this.netAssetApproachmodels,...this.marketApproachmodels,...this.ruleElevenApproachModels, ...this.startUpApproachModels];
 
   const processStateModel ={
     firstStageInput:{
@@ -504,6 +530,25 @@ clearModelRadioButton(modelName:string){
       this.slumpSaleSelectedModel = null;
       break;
 
+    case 'berkus':
+      this.berkusSelectedModel = null;
+      break;
+
+    case 'riskFactor':
+      this.riskFactorSelectedModel = null;
+      break;
+
+    case 'scoreCard':
+      this.scoreCardSelectedModel = null;
+      break;
+
+    case 'ventureCapital':
+      this.ventureCapitalSelectedModel = null;
+      break;
+
+    case 'costToDuplicate':
+      this.costToDuplicateSelectedModel = null;
+      break;
   }
 }
 
@@ -625,6 +670,21 @@ get downloadTemplate() {
           case 'slumpSale':
             this.slumpSaleSelectedModel = true;
             break;
+          case 'berkus':
+            this.berkusSelectedModel = true;
+            break;
+          case 'riskFactor':
+            this.riskFactorSelectedModel = true;
+            break;
+          case 'scoreCard':
+            this.scoreCardSelectedModel = true;
+            break;
+          case 'ventureCapital':
+            this.ventureCapitalSelectedModel = true;
+            break;
+          case 'costToDuplicate':
+            this.costToDuplicateSelectedModel = true;
+            break;
         }
 
        if(!validator){
@@ -646,6 +706,11 @@ get downloadTemplate() {
         for(const ruleElevenUaMethods of RULE_ELEVEN_UA_APPROACH){
           if(ele === ruleElevenUaMethods){
             this.ruleElevenApproachModels.push(ele);
+          }
+        }
+        for(const startUpMethods of START_UP_APPROACH){
+          if(ele === startUpMethods){
+            this.startUpApproachModels.push(ele);
           }
         }
        }
@@ -997,5 +1062,24 @@ get downloadTemplate() {
   disableSpecificRiskPremium(){
     if(this.data?.data?.coeMethod === 'buildUpCapm') return !this.marketPosition.value || !this.liquidityFactor.value || !this.competition.value;
     return !this.companySize.value ||  !this.marketPosition.value || !this.liquidityFactor.value || !this.competition.value;
+  }
+
+  disableTemplateButton(){
+    if(
+      (
+        this.startUpApproachModels.length == 1 &&
+        this.startUpApproachModels.includes(MODELS.COST_TO_DUPLICATE)
+      ) ||
+      (
+        this.incomeApproachmodels.length || 
+        this.marketApproachmodels.length || 
+        this.netAssetApproachmodels.length ||
+        this.ruleElevenApproachModels.length
+      )
+    )
+    {
+      return true;
+    }
+    return false;
   }
 }

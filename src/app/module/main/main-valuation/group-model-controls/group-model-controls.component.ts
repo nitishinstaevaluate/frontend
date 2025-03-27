@@ -26,7 +26,6 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./group-model-controls.component.scss']
 })
 export class GroupModelControlsComponent implements OnInit {
-  // decorators declaration
   @Output() saveAndNextEvent = new EventEmitter<void>();
   @Output() groupModelControls = new EventEmitter<any>();
   @Output() previousPage = new EventEmitter<any>();
@@ -34,63 +33,23 @@ export class GroupModelControlsComponent implements OnInit {
   @Input() step: any;
   @Input() firstStageInput: any;
 
-  // form declaration
   modelControl:any = groupModelControl;
   modelValuation: FormGroup;
-  form: FormGroup;
-  modelSpecificCalculation:FormGroup;
-  waccCalculation:FormGroup;
-  relativeValuation:FormGroup;
   hasError= hasError;
   MODEL=MODELS;
   allModels:any = ALL_MODELS;
-  helperText = helperText
-
-// array declaration
-  inputs = [{}];
-  checkedItems:any=[];
-  selectedPreferenceItems:any=[];
+  helperText = helperText;
   files: any = [];
-  industries:any=[];
-  subIndustries: any=[];
-  preferenceCompanies:any=[];
-  
-  // property declaration
-  industriesRatio: any = '';
-  betaIndustriesId: any = '';
-  taxRateModelBox:any='25.17'
-  floatLabelType:any = 'never';
-  isDragged=false;
-  valuationM: any;
+  taxRateModelBox:any = '25.17';
   taxRate: any;
-  discountR: any;
-  terminalgrowthRate: any;
-  equityM: any;
-  riskF: any;
-  marketE: any;
-  betaS: any;
-  rPremium: any;
-  preShaCap: any;
-  debt: any;
-  cStructure: any;
-  pppShareCaptial: any;
-  indianTreasuryY: any;
-  historicalReturns: any;
-  debtRatio: any;
-  totalCapital: any;
-  debtProp: any;
-  equityProp:any;
   newDate: any;
-  discountRateSelection: any;
-  betaIndustries: any;
   fileName:any='';
-  modelSelectStatus:boolean= true;
-  selectedIndustry:any;
+  modelSelectStatus:boolean = true;
   companyQuery:any;
   searchByCompanyName = new Subject<string>();
   options:any=[];
-  companyListLoader=false;
-  companyInput=false;
+  companyListLoader = false;
+  companyInput = false;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -101,53 +60,23 @@ export class GroupModelControlsComponent implements OnInit {
     private processStatusManagerService: ProcessStatusManagerService,
     private utilService: UtilService,
     private excelAndReportService: ExcelAndReportService) {
-    this.form=this.formBuilder.group({});
-
     this.modelValuation=this.formBuilder.group({
       company:['',[Validators.required]],
       valuationDate:['',[Validators.required]],
       projectionYears:['',[Validators.required]],
       location:['India',[Validators.required]],
       projectionYearSelect:['',[Validators.required]],
-      industry:['',[Validators.required]],
-      subIndustry:['',[Validators.required]],
       model:[false,[Validators.required]],
-      userId: ['641d654fa83ed4a5f0293a52', Validators.required],
       excelSheetId:['',[Validators.required]],
       type: ['industry', Validators.required],
       outstandingShares:['',[Validators.required]],
       taxRateType:['25.17',[Validators.required]],
       taxRate:['',[Validators.required]],
       terminalGrowthRate:['',[Validators.required]],
-      discountRateType: ['WACC'],                                  // removed as required field
-      // discountRateValue: [20],
       reportingUnit:['',[Validators.required]],
       currencyUnit:['INR',[Validators.required]],
       faceValue:['',[Validators.required]],
       issuanceOfShares:[false,[Validators.required]]
-    })
-    this.modelSpecificCalculation=this.formBuilder.group({
-      discountRate:[null,[Validators.required]],
-      discountingPeriod:['',[Validators.required]],
-      betaType:['',[Validators.required]],
-      coeMethod:['',[Validators.required]],
-      riskFreeRate:['',[Validators.required]],
-      expMarketReturnType:['',[Validators.required]],
-      expMarketReturn:['',[Validators.required]],
-      otherAdj:['',[Validators.required]],
-      beta:['',[Validators.required]]
-    })
-    this.waccCalculation=this.formBuilder.group({
-      riskPremium:['',[Validators.required]],
-      capitalStructureType:['',[Validators.required]],
-      copShareCapital:['',[Validators.required]],
-      costOfDebt:['',[Validators.required]]
-    })
-    this.relativeValuation=this.formBuilder.group({
-      preferenceRatioSelect:['',[Validators.required]],
-      companies:this.formBuilder.array([]),
-      industries:this.formBuilder.array([]),
-
     })
   }
 
@@ -166,25 +95,19 @@ export class GroupModelControlsComponent implements OnInit {
 
   async checkProcessExist(data:any){
    if(data){
-    this.betaIndustries = data?.betaIndustries;
     if(data?.company){
       this.companyQuery = data?.company;
       this.fetchCompanyNames()
       this.modelValuation.controls['company'].setValue(data?.company ?? '');
     }
    this.modelValuation.controls['currencyUnit'].setValue(data?.currencyUnit ?? 'INR');
-   this.modelValuation.controls['discountRateType'].setValue(data?.discountRateType === ""  ?  'WACC' : data?.discountRateType);
-  //  this.modelValuation.controls['discountRateValue'].setValue(data?.discountRateValue === "" ? 20 : data?.discountRateValue);
 
-   this.preferenceCompanies = data.preferenceCompanies ?? [];
-   this.modelValuation.controls['industry'].setValue(data?.industry?? '');
    this.modelValuation.controls['location'].setValue(data?.location?? 'India');
    this.modelValuation.controls['model'].setValue(data?.model?? false);
    this.modelValuation.controls['outstandingShares'].setValue(data?.outstandingShares?? '');
    this.modelValuation.controls['projectionYearSelect'].setValue(data?.projectionYearSelect?? '');
    this.modelValuation.controls['projectionYears'].setValue(data?.projectionYears?? '');
    this.modelValuation.controls['reportingUnit'].setValue(data?.reportingUnit?? '');
-   this.modelValuation.controls['subIndustry'].setValue(data?.subIndustry?? '');
    this.modelValuation.controls['taxRate'].setValue(data?.taxRate?? '');
    this.modelValuation.controls['faceValue'].setValue(data?.faceValue?? '');
    this.modelValuation.controls['issuanceOfShares'].setValue(data?.issuanceOfShares?? '');
@@ -202,15 +125,13 @@ export class GroupModelControlsComponent implements OnInit {
 
    this.modelValuation.controls['terminalGrowthRate'].setValue(data?.terminalGrowthRate?? '');
    this.modelValuation.controls['type'].setValue(data?.type?? 'industry');
-   this.modelValuation.controls['industry'].setValue(data?.industry ?? '');
-   this.modelValuation.controls['userId'].setValue( !data?.userId || data?.userId === "" ? '640a4783337b1b37d6fd04c7' : data?.userId);
    this.modelValuation.controls['excelSheetId'].setValue(data?.excelSheetId?? '');
-   this.selectedIndustry = data?.selectedIndustry;
    this.fileName = data?.fileName || data?.excelSheetId;
    
   const dateToSet = data?.valuationDate ? new Date(data?.valuationDate) : null;
   const formattedDate = dateToSet ? `${dateToSet.getFullYear()}-${(dateToSet.getMonth() + 1).toString().padStart(2, '0')}-${dateToSet.getDate().toString().padStart(2, '0')}` : '';
   this.modelValuation.controls['valuationDate'].patchValue(formattedDate);
+  this.hideReviewForm();
    }
   }
   loadValues(){
@@ -242,16 +163,6 @@ export class GroupModelControlsComponent implements OnInit {
     //     this.betaIndustries = resp[DROPDOWN.BETAINDUSTRIES]; // Set as array element 3
     //     // this.industriesRatio = resp[DROPDOWN.INDUSTRIESRATIO]; //Set as array element 4
     //   });
-
-  }
-  
-  isRelativeValuation(value:string){
-    return this.checkedItems.includes(value);
-  }
-
-  isSelectedpreferenceRatio(value:any){
-    return isSelected(value,this.selectedPreferenceItems)
-  
   }
 
   saveAndNext(): void {
@@ -260,10 +171,7 @@ export class GroupModelControlsComponent implements OnInit {
       return;
     }
 
-    if(!this.isRelativeValuation(this.MODEL.RELATIVE_VALUATION)){
-      this.relativeValuation.controls['preferenceRatioSelect'].setValue('');
-    }
-    let payload = {...this.modelValuation.value,betaIndustry:this.betaIndustriesId,preferenceCompanies:this.preferenceCompanies}
+    let payload = this.modelValuation.value;
     
     //  check if tax rate is null
     if (payload['taxRate'] == null || payload['taxRateType']=='25.17') {
@@ -289,11 +197,11 @@ export class GroupModelControlsComponent implements OnInit {
       payload['valuationDate'] = this.newDate.getTime();
     }
     if(this.modelValuation.controls['model'].value.includes(MODELS.NAV) && this.modelValuation.controls['model'].value.length=== 1){
-      const keysToRemove = ['taxRate', 'taxRateType', 'terminalGrowthRate', 'preferenceCompanies','projectionYears','projectionYearSelect','industriesRatio','industry','discountRateType'];
+      const keysToRemove = ['taxRate', 'taxRateType', 'terminalGrowthRate','projectionYears','projectionYearSelect',];
       payload = this.recalculateFields(payload,keysToRemove)
     }
     else if(this.modelValuation.controls['model'].value.includes(MODELS.RULE_ELEVEN_UA) && this.modelValuation.controls['model'].value.length=== 1){
-      const keysToRemove = ['taxRate', 'taxRateType', 'terminalGrowthRate', 'preferenceCompanies','projectionYears','projectionYearSelect','industriesRatio','industry','discountRateType'];
+      const keysToRemove = ['taxRate', 'taxRateType', 'terminalGrowthRate','projectionYears','projectionYearSelect'];
       payload = this.recalculateFields(payload,keysToRemove)
     }
     if(!this.isElevenUa()){
@@ -312,12 +220,7 @@ export class GroupModelControlsComponent implements OnInit {
     // validate form controls
     let control:any;
     control = { ...this.modelValuation.controls };
-    if(this.subIndustries?.length <= 0){
-      delete control.subIndustry;
-    }
-    else if(this.selectedIndustry){
-      payload['selectedIndustry'] = this.selectedIndustry;
-    }
+
     const modelsNotRequireProjection = isSelected('NAV', this.modelValuation.controls['model'].value) || isSelected('CTM', this.modelValuation.controls['model'].value) || isSelected('Relative_Valuation', this.modelValuation.controls['model'].value) || isSelected('ruleElevenUa', this.modelValuation.controls['model'].value)
     const mmodelsRequireProjection = isSelected('FCFE', this.modelValuation.controls['model'].value) || isSelected('FCFF', this.modelValuation.controls['model'].value) || isSelected('Excess_Earnings', this.modelValuation.controls['model'].value)
     if (modelsNotRequireProjection && this.modelValuation.controls['model'].value.length === 1) {
@@ -342,13 +245,27 @@ export class GroupModelControlsComponent implements OnInit {
       delete control.taxRate;
       delete control.taxRateType;
       delete control.terminalGrowthRate;
-      delete control.preferenceCompanies;
       delete control.projectionYears;
       delete control.projectionYearSelect;
-      delete control.industry;
-      delete control.discountRateType;
-      // delete control.discountRateValue;
     }
+
+    const excludeModels = [MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL]
+    if(!this.modelValuation.controls['model'].value?.filter((model:any) => !excludeModels.includes(model)).length){
+      delete control.projectionYears;
+      delete control.location;
+      delete control.projectionYearSelect;
+      delete control.excelSheetId;
+      delete control.type;
+      delete control.outstandingShares;
+      delete control.taxRateType;
+      delete control.taxRate;
+      delete control.terminalGrowthRate;
+      delete control.currencyUnit;
+      delete control.faceValue;
+      delete control.issuanceOfShares;
+      delete control.reportingUnit;
+    }
+    
     if(
       (
         this.firstStageInput?.company && this.modelValuation.controls['company']?.value && 
@@ -366,7 +283,6 @@ export class GroupModelControlsComponent implements OnInit {
       payload['validateFieldOptions'] = payload['validateFieldOptions'] || {};
       payload['validateFieldOptions']['isCmpnyNmeOrVltionDteReset'] = false;
     }
-    delete control.industry;
     
     this.validateControls(control,payload);
   }
@@ -507,7 +423,8 @@ export class GroupModelControlsComponent implements OnInit {
         this.modelValuation.controls['excelSheetId'].setValue(result?.excelSheetId); 
         this.fileName = result?.fileName;
         this.evaluateNumberOfSteps()
-        this.isNotRuleElevenUaAndNav()
+        this.isNotRuleElevenUaAndNav();
+        this.hideReviewForm();
 
         this.modelValuation.controls['issuanceOfShares']?.setValue(result?.issuanceCheckbox);
         this.issuanceOfShares();
@@ -535,7 +452,8 @@ export class GroupModelControlsComponent implements OnInit {
     values.splice(values.indexOf(modelName),1);
     this.modelValuation.controls['model'].setValue(values);
     this.isNotRuleElevenUaAndNav();
-    this.evaluateNumberOfSteps()
+    this.evaluateNumberOfSteps();
+    this.hideReviewForm();
   }
   processStateManager(process:any, processId:any){
     this.processStatusManagerService.instantiateProcess(process, processId).subscribe(
@@ -566,61 +484,38 @@ export class GroupModelControlsComponent implements OnInit {
   }
 
   isNotRuleElevenUaAndNav(){
-    if (this.modelValuation.controls['model'].value?.length === 1 &&
-      (
-        this.modelValuation.controls['model'].value?.includes(MODELS.RULE_ELEVEN_UA) ||
-        this.modelValuation.controls['model'].value?.includes(MODELS.NAV) ||
-        this.modelValuation.controls['model'].value?.includes(MODELS.SLUMP_SALE)
-      ))
-      {
-      return false;
-      }
-      else if(this.modelValuation.controls['model'].value?.length === 2 && (
-        this.modelValuation.controls['model'].value?.includes(MODELS.RULE_ELEVEN_UA) &&
-        this.modelValuation.controls['model'].value?.includes(MODELS.NAV)
-      )){
-        return false;
-      }
-      else if(this.modelValuation.controls['model'].value?.length  > 1 && (
-        this.modelValuation.controls['model'].value?.includes(MODELS.RULE_ELEVEN_UA) ||
-        this.modelValuation.controls['model'].value?.includes(MODELS.NAV) ||
-        this.modelValuation.controls['model'].value?.includes(MODELS.SLUMP_SALE)
-      )){
-        return true;
-      }
-      else{
-        return true;
-      }
+    const excludeModels = [MODELS.RULE_ELEVEN_UA, MODELS.NAV, MODELS.SLUMP_SALE, MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL]
+
+    if(this.modelValuation.controls['model'].value?.length && this.modelValuation.controls['model'].value?.filter((model:any) => !excludeModels.includes(model)).length){
+      return true;
+    }
+    else{
+      return false
+    }
   }
 
   evaluateNumberOfSteps(){
-    if (this.modelValuation.controls['model'].value?.length === 1 &&
-    (
-      this.modelValuation.controls['model'].value?.includes(MODELS.RULE_ELEVEN_UA) ||
-      this.modelValuation.controls['model'].value?.includes(MODELS.NAV) ||
-      this.modelValuation.controls['model'].value?.includes(MODELS.SLUMP_SALE)
-    ))
-    {
-      this.calculationService.checkModel.next({status:true})
-    }
-    else if(this.modelValuation.controls['model'].value?.length === 2 && (
-      this.modelValuation.controls['model'].value?.includes(MODELS.RULE_ELEVEN_UA) &&
-      this.modelValuation.controls['model'].value?.includes(MODELS.NAV)
-    )){
-      this.calculationService.checkModel.next({status:true})
-    }
-    else if(this.modelValuation.controls['model'].value?.length  > 1 && (
-      this.modelValuation.controls['model'].value?.includes(MODELS.RULE_ELEVEN_UA) ||
-      this.modelValuation.controls['model'].value?.includes(MODELS.NAV) ||
-      this.modelValuation.controls['model'].value?.includes(MODELS.SLUMP_SALE)
-    )){
-      this.calculationService.checkModel.next({status:false})
-    }
-    else if(this.modelValuation.controls['model']?.value?.length){
+    const excludeModels = [MODELS.RULE_ELEVEN_UA, MODELS.NAV, MODELS.SLUMP_SALE, MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL]
+    
+    if(this.modelValuation.controls['model'].value?.filter((model:any) => !excludeModels.includes(model)).length){
       this.calculationService.checkModel.next({status:false})
     }
     else{
       this.calculationService.checkModel.next({status:true})
+    }
+  }
+
+  hideReviewForm(exceptionalControl?:any){
+    if(exceptionalControl && this.modelValuation.controls['model']?.value &&  this.modelValuation.controls['model']?.value.includes(MODELS.VENTURE_CAPITAL)) return true;
+    const excludeStartUpModels = [MODELS.BERKUS, MODELS.RISK_FACTOR, MODELS.SCORE_CARD, MODELS.VENTURE_CAPITAL];
+    if(!this.modelValuation.controls['model'].value?.length) return true;
+    if(this.modelValuation.controls['model'].value?.length && this.modelValuation.controls['model'].value?.filter((model:any) => !excludeStartUpModels.includes(model)).length){
+      this.calculationService.hideReviewForm.next({status:false})
+      return true;
+    }
+    else{
+      this.calculationService.hideReviewForm.next({status:true});
+      return false;
     }
   }
   isNavOrElevenUa(){

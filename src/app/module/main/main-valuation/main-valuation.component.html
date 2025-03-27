@@ -70,14 +70,18 @@
               <div [hidden]="step !== 3">
                 <!-- tab trial starts -->
                 <div class="tab-container">
-                  <div class="tab-element" [ngClass]="{ 'active': next === 1 }" *ngIf="ifModelExist('FCFE',formOneData?.model)">Free Cash Flow To Equity</div>
-                  <div class="tab-element" [ngClass]="{ 'active': next === 2 }" *ngIf="ifModelExist('FCFF',formOneData?.model)">Free Cash Flow To Firm</div>
-                  <div class="tab-element" [ngClass]="{ 'active': next === 4 }" *ngIf="ifModelExist('Excess_Earnings',formOneData?.model)">Excess Earning</div>
-                  <div class="tab-element" [ngClass]="{ 'active': next === 6 }" *ngIf="ifModelExist('NAV',formOneData?.model)">Net Asset Value</div>
-                  <div class="tab-element" [ngClass]="{ 'active': next === 3 }" *ngIf="ifModelExist('Relative_Valuation',formOneData?.model)">Comparable Companies</div>
-                  <div class="tab-element" [ngClass]="{ 'active': next === 5 }" *ngIf="ifModelExist('CTM',formOneData?.model)">Comparable Transaction</div>
-                  <div class="tab-element" [ngClass]="{ 'active': next === 7 }" *ngIf="ifModelExist('ruleElevenUa',formOneData?.model)">Rule 11 UA</div>
-                  <div class="tab-element" [ngClass]="{ 'active': next === 8 }" *ngIf="ifModelExist('slumpSale',formOneData?.model)">Slump Sale</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 1 }" *ngIf="ifModelExist('FCFE',formOneData?.model)" (click)="loadCurrentTab(1)">Free Cash Flow To Equity</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 2 }" *ngIf="ifModelExist('FCFF',formOneData?.model)" (click)="loadCurrentTab(2)">Free Cash Flow To Firm</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 3 }" *ngIf="ifModelExist('Relative_Valuation',formOneData?.model)" (click)="loadCurrentTab(3)">Comparable Companies</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 4 }" *ngIf="ifModelExist('Excess_Earnings',formOneData?.model)" (click)="loadCurrentTab(4)">Excess Earning</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 5 }" *ngIf="ifModelExist('CTM',formOneData?.model)" (click)="loadCurrentTab(5)">Comparable Transaction</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 6 }" *ngIf="ifModelExist('NAV',formOneData?.model)" (click)="loadCurrentTab(6)">Net Asset Value</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 7 }" *ngIf="ifModelExist('ruleElevenUa',formOneData?.model)" (click)="loadCurrentTab(7)">Rule 11 UA</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 8 }" *ngIf="ifModelExist('slumpSale',formOneData?.model)" (click)="loadCurrentTab(8)">Slump Sale</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 9 }" *ngIf="ifModelExist('berkus',formOneData?.model)" (click)="loadCurrentTab(9)">Berkus</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 10 }" *ngIf="ifModelExist('riskFactor',formOneData?.model)" (click)="loadCurrentTab(10)">Risk Factor</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 11 }" *ngIf="ifModelExist('scoreCard',formOneData?.model)" (click)="loadCurrentTab(11)">Score Card</div>
+                  <div class="tab-element" [ngClass]="{ 'active': next === 12 }" *ngIf="ifModelExist('ventureCapital',formOneData?.model)" (click)="loadCurrentTab(12)">Venture Capital</div>
                 </div>
                 <!-- tab trial ends -->
                 
@@ -89,6 +93,10 @@
                 <app-net-asset-value-details (navDetailsPrev)="navDetailsPrev($event)" (navDetails)="navDetails($event)" [hidden]="next !== 6" [formOneData]="formOneData" [thirdStageInput]="formThreeData"></app-net-asset-value-details>
                 <app-eleven-ua (ruleElevenUaDetailsPrev)="ruleElevenUaDetailsPrev($event)" (ruleElevenUaDetails)="ruleElevenUaDetails($event)" [hidden]="next !== 7" [formOneData]="formOneData" [thirdStageInput]="formThreeData"></app-eleven-ua>
                 <app-slump-sale (slumpSaleDetailsPrev)="slumpSaleDetailsPrev($event)" (slumpSaleDetails)="slumpSaleDetails($event)" [hidden]="next !== 8" [formOneData]="formOneData" [thirdStageInput]="formThreeData"></app-slump-sale>
+                <app-berkus [hidden]="next !== 9" [berkusStep]="berkusStep" (berkusstep)="berkusstep($event)"></app-berkus>
+                <app-risk-factor [hidden]="next !== 10" (riskFactor)="riskFactor($event)"></app-risk-factor>
+                <app-score-card [hidden]="next !== 11" (scoreCard)="scoreCard($event)"></app-score-card>
+                <app-venture-capital [hidden]="next !== 12" (ventureCapital)="ventureCapital($event)"></app-venture-capital>
               </div>
 
               <app-group-model-review (groupReviewControls)="groupReviewControls($event)" [step]="step" (previousPage)="previous($event)" [transferStepperTwo]="formOneAndThreeData" [hidden]="step !== 4" [fourthStageInput]="formFourData"></app-group-model-review>
